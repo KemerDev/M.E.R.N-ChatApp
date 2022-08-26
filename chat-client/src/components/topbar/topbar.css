@@ -1,0 +1,352 @@
+.topContainer {
+    position: relative;
+    height: 3.7rem;
+    width: 100%;
+    background-color: #202225;
+    display: flex;
+    align-items: center;
+    top: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .topContainer {
+        display: None;
+    }
+}
+
+.topLeft {
+    flex: 3;
+}
+
+.topLogo {
+    font-size: 30px;
+    margin-left: 3.7rem;
+    font-weight: bold;
+    color: white;
+}
+
+.topCenter {
+    flex: 5;
+}
+
+.topSearchBar {
+    width: 100%;
+    height: 2.4rem;
+    background-color: white;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.topSearchBarIcon {
+    font-style: 20px !important;
+    margin-left: 10px;
+}
+
+.topSearchInput {
+    width: 90%;
+    border: none;
+    font-size: 18px;
+}
+
+.topSearchInput:focus {
+    outline: none;
+}
+
+.topRight{
+    display: flex;
+    flex: 4;
+    color: white;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topRightIcons {
+    margin-left: 16rem;
+    display: flex;
+}
+
+.topRightItem {
+    margin-right: 1.3rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.topRightCom {
+    font-size: 2rem;
+}
+
+.ItemNotif {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileImg {
+    margin-right: 20px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    visibility: visible;
+    top: 56px;
+    right: -100px;
+    width: 250px;
+    transform: translateX(-45%);
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 9px -2px #414141;
+    padding: 0.3rem;
+}
+
+.menuItem {
+    margin: 0 2%;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    transition: background 0.5s ease;
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0.5rem;
+    color: #414141;
+}
+
+.menuItem:hover {
+    background-color: #f9e0fa;
+}
+
+.foundContainer {
+    position: absolute;
+    display: none;
+    top: 3.7rem;
+    width: 40rem;
+    padding: 10px;
+    background-color: #2f3136;
+    z-index: 1;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.foundIdiv {
+    position: relative;
+    display: flex;
+    margin: 3px;
+    align-items: center;
+    height: 3.125rem;
+    color: white;
+    border: solid #423939;
+    border-width: 0.1rem;
+    border-radius: 25px;
+}
+
+.foundBackImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+.foundConvImg {
+    width: 2.125rem;
+    height: 2.125rem;
+    margin-right: 20px;
+    margin: 0 20px 0 10px;
+    border-radius: 50%;
+}
+
+.foundName {
+    flex: 1;
+}
+
+.foundAddContainer {
+    background-color: #3f4040;
+    flex: 0.2;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: teal;
+}
+
+.foundAddContainer:hover {
+    -webkit-animation: animateHeart 2.5s infinite;
+    animation: animateHeart 2.5s infinite;
+}
+
+@-webkit-keyframes animateHeart {
+    0% {
+      -webkit-transform: scale(0.8);
+    }
+    5% {
+      -webkit-transform: scale(0.9);
+    }
+    10% {
+      -webkit-transform: scale(0.8);
+    }
+    15% {
+      -webkit-transform: scale(1);
+    }
+    50% {
+      -webkit-transform: scale(0.8);
+    }
+    100% {
+      -webkit-transform: scale(0.8);
+    }
+}
+
+@keyframes animateHeart {
+    0% {
+      transform: scale(0.8);
+    }
+    5% {
+      transform: scale(0.9);
+    }
+    10% {
+      transform: scale(0.8);
+    }
+    15% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(0.8);
+    }
+}
+
+.foundCancelContainer {
+    background-color: #ff2929;
+    flex: 0.2;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+}
+
+.pendingUsersContainer {
+    position: absolute;
+    display: none;
+    width: 20rem;
+    height: 250px;
+    top: 3.5rem;
+    left: 75%;
+    padding: 10px;
+    background: linear-gradient(to left, #36393F 79%, #2f3136 21%);
+    z-index: 1;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.pendingUsersWrapper {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.pendingAddUsers {
+    position: relative;
+    display: flex;
+    margin: 3px;
+    align-items: center;
+    height: 2.5rem;
+    color: white;
+    border: solid #423939;
+    border-width: 0.1rem;
+    border-radius: 25px;
+}
+
+.pendingBackImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+.pendingConvImg {
+    width: 1.95rem;
+    height: 1.95rem;
+    margin-right: 20px;
+    margin: 0 20px 0 10px;
+    border-radius: 50%;
+}
+
+.pendingName {
+    flex: 1;
+}
+
+.pendingAddBut {
+    display: flex;
+    flex: 0.35;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: #777977;
+}
+
+.pendingAddBut:hover {
+    opacity: 0.8;
+}
+
+#pendingAddButIcon {
+    margin: auto;
+    font-size: 25px;
+    color: #202225;
+}
+
+.pendingAcceptCancelCont {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100%;
+    right: 0;
+    width: 50%;
+    height: 5rem;
+    z-index: 1;
+}
+
+.pendingAcceptCancelCont > button {
+    margin: 1.5px;
+    height: 100%;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    z-index: 1;
+}
+
+.pendingAcceptCancelCont :nth-child(1) {
+    background-color: rgb(69, 230, 36);
+}
+
+.pendingAcceptCancelCont :nth-child(2) {
+    color: white;
+    background-color: rgb(241, 52, 52);
+}

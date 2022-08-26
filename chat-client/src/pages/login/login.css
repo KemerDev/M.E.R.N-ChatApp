@@ -1,0 +1,145 @@
+.login-contain {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-wrapp {
+    width: 70%;
+    height: 70%;
+    display: flex;
+}
+
+.login-left, .login-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-logo {
+    font-size: 50px;
+    font-weight: 800;
+    color: #1877f2;
+    margin-bottom: 10px;
+}
+
+.login-desc {
+    font-size: 24px;
+}
+
+.login-form {
+    padding: 3.5rem;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cred-error {
+    color: red;
+    text-align: center;
+}
+
+.login-input {
+    margin: 10px 0;
+    height: 3rem;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.login-input:focus {
+    outline: none;
+}
+
+.login-button {
+    margin-top: 10px;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #1877f2;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.login-button:focus {
+    outline: none;
+}
+
+.login-button:disabled {
+    cursor: not-allowed;
+}
+
+.login-forget {
+    margin: 10px;
+    text-align: center;
+    color: #1877f2;
+}
+
+.login-register-button {
+    margin-top: 1rem;
+    width: 50%;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    align-self: center;
+    background-color: #42b72a;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .login-wrapp {
+        flex-direction: column;
+    }
+
+    .login-left {
+        position: fixed;
+        left: 50%;
+        text-align: center;
+        transform: translate(-50%, 0);
+    }
+
+    .login-right {
+        position: fixed;
+        width: 70%;
+        top: 20rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .login-form {
+        padding: 0.7rem;
+        height: 70%;
+    }
+
+    .login-input {
+        height: 2.3rem;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .login-button {
+        height: 2.3rem;
+        font-size: 16px;
+    }
+
+    .login-forget {
+        font-size: 14px;
+    }
+
+    .login-register-button {
+        font-size: 16px;
+        height: 2rem;
+    }
+}

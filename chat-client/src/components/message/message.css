@@ -1,0 +1,88 @@
+.messcontain {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.messtop {
+    display: flex;
+}
+
+.messimg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.messtext {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgb(236, 236, 247);
+    color: black;
+    max-width: 150px;
+    word-wrap: break-word;
+}
+
+.messbot {
+    font-size: 10px;
+    font-style: 12px;
+    margin-top: 10px;
+    color: rgb(176, 172, 172);
+}
+
+.messcontain.own {
+    align-items: flex-end;
+}
+
+.messcontain.own .messtext {
+    background-color: #1877f2;
+    color: white;
+}
+
+
+@media screen and (max-width: 768px) {
+    .messcontain {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    
+    .messtop {
+        display: flex;
+    }
+    
+    .messimg {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    
+    .messtext {
+        padding: 10px;
+        border-radius: 20px;
+        background-color: rgb(236, 236, 247);
+        color: black;
+        max-width: 150px;
+        word-wrap: break-word;
+    }
+    
+    .messbot {
+        font-size: 10px;
+        font-style: 12px;
+        margin-top: 10px;
+        color: rgb(176, 172, 172);
+    }
+    
+    .messcontain.own {
+        align-items: flex-end;
+    }
+    
+    .messcontain.own .messtext {
+        background-color: #1877f2;
+        color: white;
+    }
+}

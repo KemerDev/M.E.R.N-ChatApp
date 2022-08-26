@@ -1,0 +1,156 @@
+.register-contain {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-wrapp {
+    width: 70%;
+    height: 70%;
+    display: flex;
+}
+
+.register-left, .register-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-logo {
+    font-size: 50px;
+    font-weight: 800;
+    color: #1877f2;
+    margin-bottom: 10px;
+}
+
+.register-desc {
+    font-size: 24px;
+}
+
+.register-form {
+    padding: 3.5rem;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.register-input-cont {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.register-input-cont label {
+    padding-right: 10px;
+    font-size: 14px;
+    color: gray;
+}
+
+.register-input-cont span {
+    padding: 3px;
+    font-size: 12px;
+    color: red;
+}
+
+.register-input {
+    margin: 10px 0px;
+    height: 3rem;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.register-input:invalid {
+    border: 1px solid red;
+}
+
+.register-input:focus {
+    outline: none;
+}
+
+.register-button {
+    margin-top: 10px;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #1877f2;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.register-forget {
+    text-align: center;
+    color: #1877f2;
+}
+
+.register-login-button {
+    margin-top: 10px;
+    width: 50%;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    align-self: center;
+    background-color: #42b72a;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .register-wrapp {
+        flex-direction: column;
+        width: 80%;
+        height: 80%;
+    }
+
+    .register-left {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .register-right {
+        position: fixed;
+        width: 70%;
+        top: 13rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+        text-align: center;
+    }
+
+    .register-form {
+        padding: 0.7rem;
+    }
+
+    .register-input-cont span {
+        text-align: center;
+    }
+
+    .register-input {
+        height: 2.3rem;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .register-button {
+        height: 2.4rem;
+        font-size: 17px;
+    }
+
+    .register-login-button {
+        height: 2rem;
+        font-size: 17px;
+    }
+}

@@ -1,0 +1,66 @@
+.onContain , .offContain {
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.offContain {
+    margin-top: 0.5rem;
+}
+
+.friend{
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.imgcont {
+    position: relative;
+    margin-right: 10px;
+}
+
+.img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.text {
+    color: rgb(128, 128, 128);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sight {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: limegreen;
+    position: absolute;
+    top: -2px;
+    left: 2px;
+}
+
+.offsight {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: tomato;
+    position: absolute;
+    top: -2px;
+    left: 2px;
+}
+
+.status {
+    margin-left: 10px;
+    color: rgb(176, 172, 172);
+    font-size: 12px;
+    font-weight: 500;
+}
