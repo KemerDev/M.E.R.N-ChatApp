@@ -252,7 +252,7 @@
     position: absolute;
     display: none;
     width: 20rem;
-    height: 250px;
+    max-height: 250px;
     top: 3.5rem;
     left: 75%;
     padding: 10px;
@@ -309,6 +309,7 @@
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     background-color: #777977;
+    cursor: pointer;
 }
 
 .pendingAddBut:hover {
@@ -324,15 +325,15 @@
 .pendingAcceptCancelCont {
     position: absolute;
     display: flex;
-    flex-direction: column;
+    width: 100%;
     top: 100%;
     right: 0;
-    width: 50%;
-    height: 5rem;
+    height: 1.7rem;
     z-index: 1;
 }
 
 .pendingAcceptCancelCont > button {
+    flex: 0.5;
     margin: 1.5px;
     height: 100%;
     padding: 0;
@@ -340,10 +341,12 @@
     font-weight: 600;
     border: none;
     z-index: 1;
+    cursor: pointer;
 }
 
 .pendingAcceptCancelCont :nth-child(1) {
-    background-color: rgb(69, 230, 36);
+    color: #d8dbd8;
+    background-color: #4f5050;
 }
 
 .pendingAcceptCancelCont :nth-child(2) {

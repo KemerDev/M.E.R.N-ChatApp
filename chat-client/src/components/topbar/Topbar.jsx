@@ -22,7 +22,7 @@ export default function Topbar() {
     // περνουμε το token απο το context
     const {token} = useContext(AuthContext)
     const {user} = useContext(UserContext)
-    const {friends} = useContext(FriendContext)
+    const {friends, frieDispatch} = useContext(FriendContext)
 
     const getUsersFunc = async () => {
         try {
@@ -167,20 +167,6 @@ export default function Topbar() {
         )
     }
 
-    /*const handleAcceptReq = async (e) => {
-        e.preventDefault()
-
-        try {
-            const res = await axiosInstance.put("/apu/v1/users/"+user._id+"/friend", {
-                userId : userId
-            }, {
-                headers : {authorization : "Bearer "+token}
-            })
-        } catch (err) {
-            console.log(err)
-        }
-    }*/
-
     const PendingNotif = () => {
         const [pendingAdds, setPendingAdds] = useState([])
         const [clickAdd, setClickAdd] = useState(false)
@@ -200,6 +186,32 @@ export default function Topbar() {
 
         const PenddingAccept = () => {
             const [openAddCancel, setOpenAddCancel] = useState({load : false, kks : undefined})
+
+            const handleAcceptReq = async (e, userId) => {
+                e.preventDefault()
+                axiosInstance.put("/api/v1/users/"+user._id+"/friend", {
+                    userId : userId
+                }, {
+                     headers : {authorization : "Bearer "+token}
+                }).then(response => {
+                    window.location.reload(false)
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+
+            const handleCancelReq = (e, userId) => {
+                e.preventDefault()
+                axiosInstance.put("/api/v1/users/"+user._id+"/rejectFriend", {
+                    userId : userId
+                }, {
+                     headers : {authorization : "Bearer "+token}
+                }).then(response => {
+                    setPendingAdds(response.data.pending)
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
 
             return (
                 <div className="pendingUsersContainer" style={clickAdd ? {display: 'block'} : {display: 'none'}}>
@@ -226,8 +238,8 @@ export default function Topbar() {
                                         {   
                                             openAddCancel.load && openAddCancel.kks === index ?        
                                                 <div className="pendingAcceptCancelCont">
-                                                    <button>Accept</button>
-                                                    <button>Decline</button>
+                                                    <button onClick={(e) => handleAcceptReq(e, pe)}>Accept</button>
+                                                    <button onClick={(e) => handleCancelReq(e, pe)}>Decline</button>
                                                 </div>
                                             : null
                                         }
@@ -278,14 +290,6 @@ export default function Topbar() {
                 <div className="topRightIcons">
                     {/* το containter των εικονιδιων και τον notification τους*/}
                     <PendingNotif />
-                    <div className="topRightItem">
-                        <Chat className="topRightCom"/>
-                        <span className="ItemNotif">6</span>
-                    </div>
-                    <div className="topRightItem">
-                        <Notifications className="topRightCom"/>
-                        <span className="ItemNotif">3</span>
-                    </div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { axiosInstance} from "../../config"
 import { AuthContext } from "../../context/authContext/authContext"
 import { UserContext } from "../../context/userContext/userContext"
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import './settings.css'
 
 export default function Settings() {
@@ -11,6 +12,7 @@ export default function Settings() {
     const {user, userDispatch} = useContext(UserContext)
 
     const [butPress, setButPress] = useState("")
+    const [imageBrowseOpen, setImageBrowseOpen] = useState(false)
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
     const BPF = process.env.REACT_APP_PUBLIC_FOLDER_BACKGROUND
@@ -194,11 +196,68 @@ export default function Settings() {
         )
     }
 
+    const ImageBrowseComp = () => {
+        const [selectedFile, setSelectedFile] = useState()
+        const [isFilePicked, setIsFilePicked] = useState(false)
+        const [isSelected, setIsSelected] = useState(false)
+
+        const changeHandler = (event) => {
+            const keep_prev = event.target.files[0]
+
+            if (!event.target.files[0]) {
+                setSelectedFile(keep_prev)
+                setIsSelected(false)
+            } else {
+                setSelectedFile(event.target.files[0])
+                setIsSelected(true)
+            }
+        }
+
+
+        return (
+            <>
+                <div className="imageBrowserCont">
+                    <div className="imageBrowserWrap">
+                        <div className="exitButtonCont" onClick={() => setImageBrowseOpen(false)}>
+                            <div className="exitButtonWrap">
+                                <span>✖</span>
+                            </div>
+                        </div>
+                        <div className="imageBrowserProps">
+                            <span>Select An image</span>
+                            <div className="imageBrowserSelectBox">
+                                {!isSelected 
+                                ?
+                                    <>
+                                        <div className="imageBrowserSelectBoxIcon">
+                                            <AddPhotoAlternateIcon className="imageBrowserSelectIcon" style={{fontSize: '30px', color: 'white'}}/>
+                                            <input type="file" onChange={changeHandler} accept=".jpg,.jpeg,.png" style={{opacity: 0, width: '10rem', height: '10rem', borderRadius: '1000px', cursor: 'pointer'}}/>
+                                        </div>
+                                        <span>Upload Image</span>
+                                    </>
+                                :
+                                    <>  
+                                        <div className="imageBrowserSelectBoxIcon">
+                                            <img src={URL.createObjectURL(selectedFile)} alt="" crossOrigin="anonymous" />
+                                            <input type="file" onChange={changeHandler} accept=".jpg,.jpeg,.png" style={{opacity: 0, width: '10rem', height: '10rem', borderRadius: '1000px', cursor: 'pointer', position: 'absolute', right: '0'}}/>
+                                        </div>
+                                        <span>Upload Image</span>
+                                    </>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             {token ?
                 <>
                     <PopUp />
+                    {imageBrowseOpen ? <ImageBrowseComp/> : null}
                     <div className="settingCont">
                         <div className="settingWrap">
                             <Link to="/">
@@ -210,7 +269,12 @@ export default function Settings() {
                             </Link>
                             <div className="settingMain">
                                 <div className="settingMidProf">
-                                    <img src={PF + user.profilePic} crossOrigin="anonymous" alt="" />
+                                    <div className="settingMidProfWrap">
+                                        <img src={PF + user.profilePic} className="settingMidProfImg" crossOrigin="anonymous" alt="" />
+                                        <div className="settingMidProfTextCont" onClick={() => !imageBrowseOpen ? setImageBrowseOpen(true) : setImageBrowseOpen(false)}>
+                                            <span className="settingMidProfText">Change Profile Pic</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="settingTopCover">
                                     <img src={BPF + user.coverPic} crossOrigin="anonymous" alt="" />

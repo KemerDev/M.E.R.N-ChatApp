@@ -281,13 +281,13 @@ router.put("/:id/friendReq", verify_token, async (req,res) => {
                 await Cuser.updateOne({ $push:{ pendingAc:req.params.id } })
             }
 
-            res.status(200).json("Friend request has been sent")
+            res.status(200).send({message : "Friend request has been sent"})
             
         } catch (err) {
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json("Can't friend request yourself")
+        res.status(403).send({message : "Can't friend request yourself"})
     }
 })
 
@@ -300,15 +300,15 @@ router.put("/:id/cancelFriendReq", verify_token, async (req,res) => {
             if(!Fuser.friends.includes(req.body.userId)) {
                 await Fuser.updateOne({ $pull:{ additionAc:req.body.userId } })
                 await Cuser.updateOne({ $pull:{ pendingAc:req.params.id } })
+                res.status(200).send({message : "Friend request canceled"})
             }
 
-            res.status(200).json("Friend request canceled")
             
         } catch (err) {
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json("Can't cancel friend request")
+        res.status(403).send({message : "Can't cancel friend request"})
     }
 })
 
@@ -334,27 +334,47 @@ router.get("/getAdditions/:id", verify_token, async (req,res) => {
     }
 })
 
-// προσθηκη φιλου
+// αποδοχη φιλου
 router.put("/:id/friend", verify_token, async (req,res) => {
     if(req.params.id !== req.body.userId) {
-        try{
+        try {
             const Fuser = await User.findById(req.params.id)
             const Cuser = await User.findById(req.body.userId)
 
             if(!Fuser.friends.includes(req.body.userId)) {
                 await Fuser.updateOne({ $push:{ friends:req.body.userId } })
                 await Cuser.updateOne({ $push:{ friends:req.params.id } })
+                await Fuser.updateOne({ $pull:{ pendingAc:req.body.userId } })
 
-                res.status(200).json("User has been added")
+                res.status(200).send({message : "User has been added"})
             } else {
-                res.status(403).json("You are already friend")
+                res.status(403).send({message : "You are already friends"})
             }
 
         } catch(err) {
-            res.status(500).json(err)
+            res.status(500)
         }
     } else {
-        res.status(403).json("You can't add yourself")
+        res.status(403).send({message : "You can't add yourself"})
+    }
+})
+
+router.put("/:id/rejectFriend", async (req, res) => {
+    if (req.params.id !== req.body.userId) {
+        try {
+            const Fuser = await User.findById(req.params.id)
+            const Cuser = await User.findById(req.body.userId)
+
+            await Fuser.updateOne({ $pull:{ pendingAc:req.body.userId } })
+            await Cuser.updateOne({ $pull:{ additionAc:req.params.id } })
+
+            const pending = await User.findById(req.params.id, {_id : 0, pendingAc : 1})
+            res.status(200).send({message : "Friend request canceled", pending : pending.pendingAc})
+        } catch (err) {
+            res.status(500)
+        }
+    } else {
+        res.status(403).send({message : "You can't reject yourself"})
     }
 })
 
@@ -378,7 +398,7 @@ router.put("/:id/unfriend", verify_token, async (req,res) => {
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json("You can't unfriend yourself")
+        res.status(403).json({message : "You can't unfriend yourself"})
     }
 })
 
