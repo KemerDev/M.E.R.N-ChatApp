@@ -198,25 +198,55 @@ export default function Settings() {
 
     const ImageBrowseComp = () => {
         const [selectedFile, setSelectedFile] = useState()
-        const [isFilePicked, setIsFilePicked] = useState(false)
         const [isSelected, setIsSelected] = useState(false)
+        const [showError, setShowError] = useState("")
 
         const changeHandler = (event) => {
-            const keep_prev = event.target.files[0]
-
-            if (!event.target.files[0]) {
-                setSelectedFile(keep_prev)
-                setIsSelected(false)
+            if (event.target.files[0].type === 'image/jpeg' || event.target.files[0].type === 'image/jpg' || event.target.files[0].type === 'image/png') {
+                if (event.target.files[0].size < 8388608) {
+                    const keep_prev = event.target.files[0]
+        
+                    if (!event.target.files[0]) {
+                        setSelectedFile(keep_prev)
+                        setIsSelected(false)
+                    } else {
+                        setSelectedFile(event.target.files[0])
+                        setIsSelected(true)
+                    }
+                } else {
+                    setShowError("Image Size Must Be Smaller Than 8MB")
+                }
             } else {
-                setSelectedFile(event.target.files[0])
-                setIsSelected(true)
+                setShowError("Image Must Be Jpeg,Jpg or Png format")
             }
+        }
+
+        const handleImageUpload = (e) => {
+            e.preventDefault()
+            const ImgFormData = new FormData()
+            ImgFormData.append("image", selectedFile)
+
+            axiosInstance.post("upload/image/"+ user._id, ImgFormData, {
+                headers: {authorization : "Bearer "+token, 'Content-Type': "multipart/form-data"}
+            }).then((response) => {
+                const new_user = {...user, profilePic : response.data.filename}
+                localStorage.removeItem("userLocal")
+                localStorage.setItem("userLocal", JSON.stringify(new_user))
+            }).then(data => {
+                window.location.reload(false)
+            }).catch((error) => {
+                console.log(error)
+            })
         }
 
 
         return (
             <>
                 <div className="imageBrowserCont">
+                    <div className="MessageEditErr" style={ showError ? {visibility: 'visible'} : {visibility: 'hidden'}}>
+                        <span className="MessageErr">{showError}</span>
+                        <span className="MessageClose" onClick={() => setShowError("")}>✖</span>
+                    </div>
                     <div className="imageBrowserWrap">
                         <div className="exitButtonCont" onClick={() => setImageBrowseOpen(false)}>
                             <div className="exitButtonWrap">
@@ -233,7 +263,6 @@ export default function Settings() {
                                             <AddPhotoAlternateIcon className="imageBrowserSelectIcon" style={{fontSize: '30px', color: 'white'}}/>
                                             <input type="file" onChange={changeHandler} accept=".jpg,.jpeg,.png" style={{opacity: 0, width: '10rem', height: '10rem', borderRadius: '1000px', cursor: 'pointer'}}/>
                                         </div>
-                                        <span>Upload Image</span>
                                     </>
                                 :
                                     <>  
@@ -241,7 +270,9 @@ export default function Settings() {
                                             <img src={URL.createObjectURL(selectedFile)} alt="" crossOrigin="anonymous" />
                                             <input type="file" onChange={changeHandler} accept=".jpg,.jpeg,.png" style={{opacity: 0, width: '10rem', height: '10rem', borderRadius: '1000px', cursor: 'pointer', position: 'absolute', right: '0'}}/>
                                         </div>
-                                        <span>Upload Image</span>
+                                        <div className="imageBrowserSelectBoxIconButton">
+                                            <button className="handleImageUploadButton" onClick={(e) => handleImageUpload(e)}>Upload Image</button>
+                                        </div>
                                     </>
                                 }
                             </div>

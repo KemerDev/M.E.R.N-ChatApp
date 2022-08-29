@@ -1,5 +1,8 @@
 // Αρχηκοποιηση και εναρξη της express εφαρμογης μας
 // Οπως και ολα τα πακετα που εγκαταστησαμε
+const User = require('./models/User')
+const fs = require('fs')
+const jwt = require("jsonwebtoken")
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -84,41 +87,79 @@ app.use("*/images/", express.static(path.join(__dirname, "PUBLIC_FOLDER/images/"
 app.use("*/background/", express.static(path.join(__dirname, "PUBLIC_FOLDER/background/")))
 app.use("*/sounds/", express.static(path.join(__dirname, "PUBLIC_FOLDER/sounds/")))
 
+const verify_token = (req, res, next) => {
+  const authHeader = req.headers.authorization
+
+  if (!authHeader) return res.status(401).json("You are not authorized")
+  const access_jwt = authHeader.split(" ")[1]
+
+  const public_key = fs.readFileSync(path.join(process.cwd(), "keys/accPublic.pem"))
+
+  jwt.verify(access_jwt, public_key, {algorithms : ['RS512']}, (err, user) => {
+      if (err)  return res.status(403).json("Token not valid")
+
+      req.user = user
+      next()
+  })
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "PUBLIC_FOLDER/images");
+      cb(null, "PUBLIC_FOLDER/images")
     },
     filename: (req, file, cb) => {
-      cb(null, req.body.name);
+      cb(null, file.originalname)
     },
   })
   
-  const upload = multer({ storage: storage });
-  app.post("/api/v1/upload/image", upload.single("file"), (req, res) => {
-    try {
-      return res.status(200).send("File uploded successfully")
+const upload = multer({ storage: storage })
+app.post("/upload/image/:id", verify_token, upload.single("image"), async (req, res) => {
+  try {
+    prev_photo = await User.findById(req.params.id, {_id : 0, profilePic : 1})
+
+    if (prev_photo.profilePic !== "default.png") {
+      fs.unlinkSync("PUBLIC_FOLDER/images/" + prev_photo.profilePic)
+    }
+
+    await User.findByIdAndUpdate(req.params.id, {
+        profilePic : req.file.originalname,
+      })
+    res.status(200).send({"messages" : "File uploded successfully", "filename" : req.file.originalname})
     } catch (error) {
-      console.error(error);
+    console.error(error)
     }
   })
 
-  const storage_back = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "PUBLIC_FOLDER/background");
-    },
-    filename: (req, file, cb) => {
-      cb(null, req.body.name);
-    },
-  })
+const storage_back = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "PUBLIC_FOLDER/background")
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  },
+})
   
-  const upload_back = multer({ storage: storage_back });
-  app.post("/api/v1/upload/background", upload_back.single("file"), (req, res) => {
+const upload_back = multer({ storage: storage_back });
+app.post("/upload/background/:id", verify_token, upload_back.single("image"), async (req, res) => {
+  try {
     try {
-      return res.status(200).send("File uploded successfully")
-    } catch (error) {
-      console.error(error);
-    }
-  })
+      prev_photo = await User.findById(req.params.id, {_id : 0, coverPic : 1})
+  
+      if (prev_photo.coverPic !== "default.png") {
+        fs.unlinkSync("PUBLIC_FOLDER/images/" + prev_photo.coverPic)
+      }
+  
+      await User.findByIdAndUpdate(req.params.id, {
+          coverPic : req.file.originalname,
+        })
+      res.status(200).send({"messages" : "File uploded successfully", "filename" : req.file.originalname})
+      } catch (error) {
+      console.error(error)
+      }
+  } catch (error) {
+    console.error(error);
+  }
+})
 
 app.use("/api/v1/users", userRoute)
 app.use("/api/v1/auth", authRoute)
