@@ -13,6 +13,7 @@ export default function Settings() {
 
     const [butPress, setButPress] = useState("")
     const [imageBrowseOpen, setImageBrowseOpen] = useState(false)
+    const [coverBrowseOpen, setCoverBrowseOpen] = useState(false)
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
     const BPF = process.env.REACT_APP_PUBLIC_FOLDER_BACKGROUND
@@ -283,12 +284,100 @@ export default function Settings() {
         )
     }
 
+    const CoverBrowseComp = () => {
+        const [selectedFile, setSelectedFile] = useState()
+        const [isSelected, setIsSelected] = useState(false)
+        const [showError, setShowError] = useState("")
+
+        const changeHandler = (event) => {
+            if (event.target.files[0].type === 'image/jpeg' || event.target.files[0].type === 'image/jpg' || event.target.files[0].type === 'image/png') {
+                if (event.target.files[0].size < 8388608) {
+                    const keep_prev = event.target.files[0]
+        
+                    if (!event.target.files[0]) {
+                        setSelectedFile(keep_prev)
+                        setIsSelected(false)
+                    } else {
+                        setSelectedFile(event.target.files[0])
+                        setIsSelected(true)
+                    }
+                } else {
+                    setShowError("Image Size Must Be Smaller Than 8MB")
+                }
+            } else {
+                setShowError("Image Must Be Jpeg,Jpg or Png format")
+            }
+        }
+
+        const handleImageUpload = (e) => {
+            e.preventDefault()
+            const ImgFormData = new FormData()
+            ImgFormData.append("Cover-image", selectedFile)
+
+            axiosInstance.post("upload/background/"+ user._id, ImgFormData, {
+                headers: {authorization : "Bearer "+token, 'Content-Type': "multipart/form-data"}
+            }).then((response) => {
+                const new_user = {...user, coverPic : response.data.filename}
+                localStorage.removeItem("userLocal")
+                localStorage.setItem("userLocal", JSON.stringify(new_user))
+            }).then(data => {
+                window.location.reload(false)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+
+        return (
+            <>
+                <div className="coverBrowserCont">
+                    <div className="MessageEditErr" style={ showError ? {visibility: 'visible'} : {visibility: 'hidden'}}>
+                        <span className="MessageErr">{showError}</span>
+                        <span className="MessageClose" onClick={() => setShowError("")}>✖</span>
+                    </div>
+                    <div className="coverBrowserWrap">
+                        <div className="exitButtonCont" onClick={() => setCoverBrowseOpen(false)}>
+                            <div className="exitButtonWrap">
+                                <span>✖</span>
+                            </div>
+                        </div>
+                        <div className="coverBrowserProps">
+                            <span>Select An cover image</span>
+                            <div className="coverBrowserSelectBox">
+                                {!isSelected 
+                                ?
+                                    <>
+                                        <div className="coverBrowserSelectBoxIcon">
+                                            <AddPhotoAlternateIcon className="coverBrowserSelectIcon" style={{fontSize: '30px', color: 'white'}}/>
+                                            <input type="file" onChange={changeHandler} accept=".jpg,.jpeg,.png" style={{opacity: 0, width: '100%', height: '100%', borderRadius: '1000px', cursor: 'pointer'}}/>
+                                        </div>
+                                    </>
+                                :
+                                    <>  
+                                        <div className="coverBrowserSelectBoxIcon">
+                                            <img src={URL.createObjectURL(selectedFile)} alt="" crossOrigin="anonymous" />
+                                            <input type="file" onChange={changeHandler} accept=".jpg,.jpeg,.png" style={{opacity: 0, width: '100%', height: '100%', borderRadius: '1000px', cursor: 'pointer', position: 'absolute', right: '0'}}/>
+                                        </div>
+                                        <div className="coverBrowserSelectBoxIconButton">
+                                            <button className="handleCoverUploadButton" onClick={(e) => handleImageUpload(e)}>Upload Image</button>
+                                        </div>
+                                    </>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             {token ?
                 <>
                     <PopUp />
                     {imageBrowseOpen ? <ImageBrowseComp/> : null}
+                    {coverBrowseOpen ? <CoverBrowseComp/> : null}
+
                     <div className="settingCont">
                         <div className="settingWrap">
                             <Link to="/">
@@ -308,7 +397,12 @@ export default function Settings() {
                                     </div>
                                 </div>
                                 <div className="settingTopCover">
-                                    <img src={BPF + user.coverPic} crossOrigin="anonymous" alt="" />
+                                    <div className="settingTopWrap">
+                                        <img src={BPF + user.coverPic} crossOrigin="anonymous" alt="" />
+                                        <div className="settingTopCoverTextCont" onClick={() => !coverBrowseOpen ? setCoverBrowseOpen(true) : setCoverBrowseOpen(false)}>
+                                            <span className="settingTopCoverText">Change Cover Pic</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="settingBottomSel">
                                     <div className="settingBottomSelEditConv">

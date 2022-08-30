@@ -140,12 +140,12 @@ const storage_back = multer.diskStorage({
 })
   
 const upload_back = multer({ storage: storage_back });
-app.post("/upload/background/:id", verify_token, upload_back.single("image"), async (req, res) => {
+app.post("/upload/background/:id", verify_token, upload_back.single("Cover-image"), async (req, res) => {
   try {
     try {
       prev_photo = await User.findById(req.params.id, {_id : 0, coverPic : 1})
   
-      if (prev_photo.coverPic !== "default.png") {
+      if (prev_photo.coverPic !== "defaultCover.png") {
         fs.unlinkSync("PUBLIC_FOLDER/images/" + prev_photo.coverPic)
       }
   
