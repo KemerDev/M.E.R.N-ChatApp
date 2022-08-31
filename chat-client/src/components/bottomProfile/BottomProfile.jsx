@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom"
 import { UserContext } from "../../context/userContext/userContext"
 import { axiosInstance } from '../../config'
 import SettingsIcon from '@mui/icons-material/Settings'
+import './bottomProfile.css'
+
 
 export default function BottomProfile({socket, token}) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
@@ -19,7 +21,6 @@ export default function BottomProfile({socket, token}) {
                 await axiosInstance.post("/api/v1/users/logout/" + user._id,{
                     headers: {authorization : "Bearer "+token}
                 })
-
                 socket.emit("userDisconnect", user._id)
                 localStorage.clear()
                 navigate("/login")
@@ -58,10 +59,6 @@ export default function BottomProfile({socket, token}) {
         <ProfileIcon props={<DropdownMenu/>}/>
         <span className='bottomUsername'>{user.username}</span>
         <div className='settingsIconContainer'>
-            <div className='settingsIconContainerProp'></div>
-            <div className='settingsTextContainer'>
-                <span className='settingsText'>Settings</span>
-            </div>
             <Link to="/settings">
                 <SettingsIcon className='settingsIcon'/>
             </Link>

@@ -4,7 +4,7 @@
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    margin-top: 10px;
+    margin: 10px 5px 0 5px;
     border-radius: 5px;
     height: 1.3rem;
 }
@@ -74,10 +74,9 @@
         margin-top: 10px;
         display: flex;
         align-items: center;
-        padding: 10px;
         cursor: pointer;
-        border-radius: 5px;
-        height: 1.3rem;
+        border-radius: 1px;
+        height: 1rem;
     }
     
     .convcontain:hover {
@@ -86,8 +85,8 @@
     }
     
     .convimg {
-        width: 32px;
-        height: 32px;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
         object-fit: cover;
         margin-right: 20px;
@@ -106,10 +105,14 @@
     }
     
     .convname {
-        color: rgb(128, 128, 128);
+        color: rgb(216, 210, 210);
         font-size: 16px;
         font-weight: 500;
         z-index: 0;
+    }
+
+    .convRightNotif {
+        right: 0.5rem;
     }
 
     .ItemNotifCount {

@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { ConvContext } from '../../context/convContext/convContext'
-import { FriendContext } from '../../context/friendsContext/friendContext'
 import { MessContext } from '../../context/messContext/messContext'
 import { UserContext } from '../../context/userContext/userContext'
 import {Chat} from "@material-ui/icons"
@@ -12,9 +11,10 @@ export default function Conversation({convHandle, conversation}) {
     const BPF = process.env.REACT_APP_PUBLIC_FOLDER_BACKGROUND
 
     const { conversations } = useContext(ConvContext)
-    const { friends } = useContext(FriendContext)
     const { messages } = useContext(MessContext)
     const { user } = useContext(UserContext)
+
+    const friends = JSON.parse(localStorage.getItem('friends'))
 
     return (
         <>  

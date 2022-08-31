@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState, useRef } from "react"
-import {AuthContext} from "../../context/authContext/authContext"
-import { FriendContext } from "../../context/friendsContext/friendContext"
+import { AuthContext } from "../../context/authContext/authContext"
 import { ConvContext } from "../../context/convContext/convContext"
+import { UserContext } from "../../context/userContext/userContext"
 import { axiosInstance } from "../../config"
-import jwt from 'jwt-decode'
+
 
 import './chatOnline.css'
 
@@ -13,41 +13,22 @@ export default function ChatOnline({usersOnline}) {
 
     //user context
     const {token} = useContext(AuthContext)
+    const { user } = useContext(UserContext)
     const {conversations} = useContext(ConvContext)
-    const {friends} = useContext(FriendContext)
-
-    const user = jwt(token)
+    const friends = JSON.parse(localStorage.getItem('friends'))
 
     const [onlineFriends, setOnlineFriends] = useState([])
-    const [offlineFriends, setOfflineFriends] = useState([])
 
     const friendId = useRef("")
 
-    useEffect(() => {   
+    useEffect(() => {
+        console.log(friends)
+        console.log(usersOnline)
+    }, [])
 
-        const offline = []
-
-        for(let i in friends) {
-            if (!usersOnline.includes(friends[i]._id)) {
-                offline.push(friends[i])
-            }
-        }
-
-        setOfflineFriends(offline)
-    }, [friends, usersOnline])
-
-    useEffect(() => {   
-
-        const online = []
-
-        for(let i in friends) {
-            if (usersOnline.includes(friends[i]._id)) {
-                online.push(friends[i])
-            }
-        }
-
-        setOnlineFriends(online)
-    }, [friends, usersOnline])
+    useEffect(() => {
+        setOnlineFriends(usersOnline)
+    }, [usersOnline])
     
     const handleClick = async (e, data) => {
         e.preventDefault()
@@ -142,16 +123,16 @@ export default function ChatOnline({usersOnline}) {
             </div>
 
             <div className="offContain">
-                <span className='status'>OFFLINE -- | {offlineFriends.length} |</span>
-                {offlineFriends.map(o=> ( o ?
-                    <div className="friend" onClick={((e) => handleClick(e, o?.username))}>
+                <span className='status'>OFFLINE -- | {friends.filter(x => !usersOnline.includes(x)).length} |</span>
+                {friends.map((x) => !usersOnline.includes(x) ?
+                    <div className="friend" onClick={((e) => handleClick(e, x?.username))}>
                         <div className="imgcont">
-                            <img src={o?.profilePic ? PF + o?.profilePic : PF + "default.png"} crossOrigin="anonymous" className="img" alt="" />
+                            <img src={x?.profilePic ? PF + x?.profilePic : PF + "default.png"} crossOrigin="anonymous" className="img" alt="" />
                             <div className={"offsight"}></div>
                         </div>
-                        <div className="text">{o?.username}</div>
+                        <div className="text">{x?.username}</div>
                     </div>
-                : null))}
+                : null)}
             </div>
         </>
     )

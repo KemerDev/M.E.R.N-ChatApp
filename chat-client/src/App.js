@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {BrowserRouter as Router,  Routes, Route, Navigate} from "react-router-dom"
 import {io} from "socket.io-client"
 import { AuthContext } from "./context/authContext/authContext"
 import { UserContext } from "./context/userContext/userContext"
-import { FriendContext } from "./context/friendsContext/friendContext"
-import { friendsCall } from './apiCalls'
+import { ConvContext } from './context/convContext/convContext'
+import { MessContext } from './context/messContext/messContext'
+import { friendsCall, conversationsCall, messagesCall } from './apiCalls'
 import Register from "./pages/register/Register"
 import Login from "./pages/login/Login"
 import Home from "./pages/home/Home"
@@ -12,9 +13,11 @@ import Settings from "./pages/settings/Settings"
 import jwt from 'jwt-decode'
 
 function App() {
+
   const { token } = useContext(AuthContext)
-  const { userDispatch } = useContext(UserContext)
-  const { frieDispatch } = useContext(FriendContext)
+  const { user, userDispatch } = useContext(UserContext)
+  const { conversations, convDispatch } = useContext(ConvContext)
+  const { messDispatch } = useContext(MessContext)
 
   useEffect(() => {
     if (token && !localStorage.getItem("userLocal")) {
@@ -30,11 +33,34 @@ function App() {
         {
           dataId: jwt(token)._id,
           dataToken: token,
-        },
-        frieDispatch
+        }
       )
     }
-  }, [])
+  }, [token])
+
+  useEffect(() => {
+    if (token) {
+      conversationsCall (
+        {
+          dataId: user._id,
+          dataToken: token,
+        },
+        convDispatch
+      )
+    }
+  }, [token])
+
+  useEffect(() => {
+    if (token) {
+      messagesCall (
+        {
+            conver: conversations,
+            dataToken: token,
+        },
+        messDispatch
+      )
+    }
+  }, [conversations, messDispatch, token])
 
   return (
     <Router>

@@ -173,18 +173,14 @@ const server = app.listen(process.env.PORT || 8800, () => {
 
 const io = require("socket.io")(server, {cors: {origin: '*',}})
 
-let users = []
+var users = []
 
 // μεθοδος για την εισαγωγη των χρηστων και 
 // το id του socket 
 const userConnection = (userId, socketId) => {
-    if (!users?.some(user=>user.userId === userId)) {
-		  users?.push({userId, socketId})
-	  } else {
-		  users.map((ch) => {
-			  return ch.userId === userId ? ch.socketId = socketId : ch
-		  })
-	  }
+  if (!users.includes({userId, socketId})){
+		users.push({userId, socketId})
+  }
 }
 
 // μεθοδος για την αφαιρεση του χρηστη
@@ -199,9 +195,9 @@ const getUser = (userId) => {
 io.on("connection", (socket) =>{
   // παρε το id του χρηστη απο τον client
   socket.on("userCon", userId => {
-      userConnection(userId, socket.id)
-      // παρε το id του socket και στειλτο στον client
-      io.emit("getUserCon", users)
+    userConnection(userId, socket.id)
+    // παρε το id του socket και στειλτο στον client
+    io.emit("getUserCon", users)
   })
 
   // παρε το αντικειμενο senderId, receiverId, text

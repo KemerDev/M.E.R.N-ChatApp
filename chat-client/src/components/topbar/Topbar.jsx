@@ -2,7 +2,6 @@ import React,{ useContext, useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import { UserContext } from "../../context/userContext/userContext"
-import { FriendContext } from "../../context/friendsContext/friendContext"
 import {Search, Person, Chat, Notifications} from "@material-ui/icons"
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
@@ -22,7 +21,7 @@ export default function Topbar() {
     // περνουμε το token απο το context
     const {token} = useContext(AuthContext)
     const {user} = useContext(UserContext)
-    const {friends, frieDispatch} = useContext(FriendContext)
+    const friends = JSON.parse(localStorage.getItem('friends'))
 
     const getUsersFunc = async () => {
         try {
@@ -283,13 +282,6 @@ export default function Topbar() {
                 <div className="topSearchBar">
                     <Search className="topSearchBarIcon" />
                     <InputSearch />
-                </div>
-            </div>
-
-            <div className="topRight">
-                <div className="topRightIcons">
-                    {/* το containter των εικονιδιων και τον notification τους*/}
-                    <PendingNotif />
                 </div>
             </div>
         </div>

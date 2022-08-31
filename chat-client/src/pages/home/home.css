@@ -1,467 +1,139 @@
-.mescontain {
+.mainContainer {
+    position: relative;
+    width: 100vw;
     height: calc(100vh - 3.7rem);
-    display: flex;
     background-color: #202225;
 }
 
-.mobileTopBar {
-    visibility: hidden;
+.mainWrap {
+    position: relative;
+    margin: 0 5% 0 5%;
+    height: 95%;
+    border-radius: 10px;
+    background-color:  #2F3136;
 }
 
-.chatleft {
-    flex: 1.6;
-    margin-left: 3rem;
-    background-color: #2F3136;
+.mainFriendsView {
+    position: relative;
+    background-color: #383b41;
     border-top-left-radius: 10px;
+    overflow-y: scroll;
+    float: left;
+    width: 30%;
+    height: 100%;
 }
 
-.chatmenuwrapp {
-    padding: 10px;
-    height: calc(100vh - 128px);
-    overflow-y: auto;
+.mainFriendsViewWrap {
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }
 
 .spanTopMes {
-    margin-left: 10px;
-    color: rgb(176, 172, 172);
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.chatLeftUser {
-    background-color: #292B2F;
-    height: 3rem;
-}
-
-.bottomProfile {
-    display: flex;
-    align-items: center;
-    padding: 7px 10px 0 10px;
-}
-
-.bottomImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.dropdownLeft {
-    position: fixed;
-    left: 5.5rem;
-    bottom: 47px;
-    width: 80px;
-    transform: translateX(-45%);
-    background-color: #18191C;
-    border: 1px;
-    border-radius: 10px;
-    padding: 0.3rem;
-    -webkit-animation: fadeIn 0.5s;
-    animation: fadeIn 0.5s;
-}
-
-@-webkit-keyframes fadeIn {
-    from { opacity: 0; }
-      to { opacity: 1; }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-      to { opacity: 1; }
-}
-
-
-.menuItemLeft {
-    margin: 0 2%;
-    height: 1rem;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    transition: background 0.5s ease;
-    text-decoration: none !important;
+    display: inline-block;
+    margin-top: 10px;
     font-size: 13px;
     font-weight: 500;
-    padding: 0.5rem;
-    color: rgb(176, 172, 172);
-}
-
-.menuItemLeft:hover {
-    background-color: #3E4249;
-}
-
-
-.bottomUsername {
-    flex: 2;
-    margin-bottom: 10px;
-    color: #FFFFFF;
-    font-size: 13px;
-    font-weight: 600;
-    z-index: 0;
-}
-
-.settingsIconContainer {
-    position: relative;
-    width: 32px;
-    height: 32px;
-    text-align: center;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.settingsTextContainer {
-    position: relative;
-    visibility: hidden;
-    left: -2.1rem;
-    bottom: 48px;
-    background-color: #18191C;
-    width: 6rem;
-    height: 1.8rem;
-    border-radius: 5px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.settingsIconContainerProp {
-    position: relative;
-    visibility: hidden;
-    left: 0.65rem;
-    bottom: 15px;
-    background-color: #18191C;
-    width: 10px;
-    height: 10px;
-    transform: rotate(45deg);
-}
-
-.settingsText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    font-size: 14px;
-    font-weight: 500;
-    color: rgb(176, 172, 172);
-}
-
-.settingsIconContainer:hover{
-    background-color: #3E4249;
-}
-
-.settingsIconContainer:hover .settingsTextContainer, 
-.settingsIconContainer:hover .settingsIconContainerProp{
-    visibility: visible;
-    -webkit-animation: fadeIn 0.5s;
-    animation: fadeIn 0.5s;
-    z-index: 1;
-}
-
-.settingsIcon {
-    position: absolute;
-    top: 50%;
-    left: 4px;
-    transform: translateY(-50%);
-    color: rgb(176, 172, 172);
-}
-
-.chatcenter {
-    position: relative;
-    flex: 6.5;
-    background-color: #36393F;
-}
-
-.chatboxwrapp {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 97%;
-}
-
-.chatboxincome {
-    height: 100%;
-    overflow-y: scroll;
-    padding-right: 10px;
-}
-
-.chatboxsend {
-    position: relative;
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 2.3rem;
-}
-
-.chatinput {
-    width: 100%;
-    height: 2.3rem;
-    padding-left: 17px;
-    resize: none;
-    overflow: hidden;
-    border-radius: 25px;
-    background-color: #40444B;
-    border: 0;
-    color: #838f90;
-    outline: none;
-}
-
-.chatsend {
-    position: absolute;
-    right: 0;
-    width: 70px;
-    height: 2.3rem;
-    border: none;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    cursor: pointer;
-    background-color: teal;
     color: white;
 }
 
-.chatright {
-    flex: 2;
-    margin-right: 3rem;
-    background-color: #2F3136;
-    border-top-right-radius: 10px;
+.mainFriendsChat {
+    position: relative;
+    float: left;
+    width: 60%;
+    height: 100%;
 }
 
-.chatonlinewrapp {
-    padding: 10px;
-    height: 95%;
-    overflow-y: scroll;
-}
-
-.noConv {
-    position: absolute;
-    font-size: 50px;
-    color: rgb(176, 172, 172);
-    cursor: default;
+.mainFriendsChatWrapp {
     width: 100%;
+    height: 100%;
     text-align: center;
-    top: 10rem;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
-@media screen and (max-width: 767px) {
-    * {
-        overflow-x: hidden;
-        overflow-y: hidden;
+.mainFriendsChatWrapp > span {
+    display: inline-block;
+    margin-top: 10px;
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+    .mainWrap {
+        background-color:  #202225;
+        overflow: hidden;
     }
 
-    .mescontain {
-        min-height: 100vh;
-        display: block;
+    .mainFriendsView {
+        position: relative;
+        flex: 0.45;
+        background-color: #383b41;
+        border-top-left-radius: 10px;
+        overflow-y: scroll;
     }
 
-    .mobileTopBar {
-        visibility: visible;
-        width: 100%;
-        height: 2.5rem;
-        background-color: #303136;
-        display : flex;
-        align-items : center;
-    }
-    
-    .menuBars {
-        margin-left: 0.7rem;
-        color: #F8F8FA;
-        cursor: pointer;
-    }
-    
-    .mobiletopTagIcon {
-        margin: 0 0.7rem 0 0.7rem;
-        color: #71767C;
-    }
-    
-    .mobileTopBarName {
-        color: #F8F8FA;
-        font-size: 20px;
-        font-weight: 500;
+    .mainFriendsView {
+        width: 60%;
     }
 
-    .chatleft {
-        display: inline-block;
-        margin: 0 0.3rem 0 0;
-        background-color: #363940;
-        width: 70%;
-        height: 100vh;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 0;
-    }
-
-    .chatLeftUser {
+    .mainFriendsChat {
         position: absolute;
-        visibility: hidden;
-        bottom: calc(-100vh - 3rem);
+        background-color:  #2F3136;
         width: 100%;
-        background-color: #292B2F;
-        height: 3rem;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        -webkit-animation: slideDown 0.5s linear;
-        animation: slideDown 0.5s linear;
-        z-index: 1;
-    }
-    
-    @-webkit-keyframes slideDown {
-        0% { bottom: 0; }
-        100% { bottom: calc(-100vh - 3rem); }
-    }
-    
-    @keyframes slideDown {
-        0% { bottom: 0; }
-        100% { bottom: calc(-100vh - 3rem); }
-    }
-    
-    .chatLeftUserUp {
-        position: absolute;
-        visibility: visible;
-        width: 100%;
-        background-color: #292B2F;
-        height: 3rem;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        -webkit-animation: slideUp 0.5s linear;
-        animation: slideUp 0.5s linear;
-        bottom: 0;
-        z-index: 1;
-    }
-    
-    @-webkit-keyframes slideUp {
-        0% { bottom: calc(-100vh - 3rem); }
-        100% { bottom: 0; }
-    }
-    
-    @keyframes slideUp {
-        0% { bottom: calc(-100vh - 3rem); }
-        100% { bottom: 0; }
-    }
-
-    .bottomProfile {
-        display: flex;
-        align-items: center;
-        padding: 7px 10px 0 10px;
-    }
-    
-    .bottomImg {
-        flex: 1;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-        cursor: pointer;
-    }
-    
-    .menuItemLeft {
-        margin: 0 2%;
-        height: 1rem;
-        display: flex;
-        align-items: center;
-        border-radius: 5px;
-        transition: background 0.5s ease;
-        text-decoration: none !important;
-        font-size: 13px;
-        font-weight: 500;
-        padding: 0.5rem;
-        color: rgb(176, 172, 172);
-    }
-    
-    .menuItemLeft:hover {
-        background-color: #3E4249;
-    }
-
-    .dropdownLeft {
-        position: fixed;
-        left: 3rem;
-        bottom: 47px;
-        width: 80px;
-        transform: translateX(-45%);
-        background-color: #18191C;
-        border: 1px;
         border-radius: 10px;
-        box-shadow: 0px 0px 9px -2px #414141;
-        padding: 0.3rem;
-        -webkit-animation: fadeIn 0.5s;
-        animation: fadeIn 0.5s;
-    }
-
-    @-webkit-keyframes fadeIn {
-        from { opacity: 0; }
-          to { opacity: 1; }
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-          to { opacity: 1; }
-    }
-
-    .chatcenter {
-        position: absolute;
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        background-color: #363940;
         -webkit-animation: slideOut 0.5s linear;
         animation: slideOut 0.5s linear;
         left: 0;
     }
-    
+
     @-webkit-keyframes slideOut {
-        0% { left: calc(72vw); }
+        0% { left: 55vw; }
         100% { left: 0; }
     }
     
     @keyframes slideOut {
-        0% { left: calc(72vw); }
+        0% { left: 55vw; }
         100% { left: 0; }
     }
-    
-    .centerMobile {
-        position: absolute;
-        display: inline-block;
+
+    .mainFriendsChatWrapp {
         width: 100%;
-        height: 100%;
-        background-color: #363940;
-        -webkit-animation: slideIn 0.5s linear;
-        animation: slideIn 0.5s linear;
-        left: calc(72vw);
+        text-align: center;
     }
 
-    .chatboxincome {
-        padding: 0 10px;
+    .mainFriendsChatWrapp > span {
+        float: left;
+        margin: 16px 0 0 3rem;
+        color: white;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .menuBars {
+        float: left;
+        margin: 10px 0 0 10px;
+        color: #F8F8FA;
+        cursor: pointer;
+    }
+
+    .mainFriendsChatIn {
+        position: absolute;
+        background-color:  #2F3136;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        -webkit-animation: slideIn 0.5s linear;
+        animation: slideIn 0.5s linear;
+        left: 55vw;
     }
     
     @-webkit-keyframes slideIn {
         0% { left: 0; }
-        100% { left: calc(72vw); }
+        100% { left: calc(55vw); }
     }
     
     @keyframes slideIn {
         0% { left: 0; }
-        100% { left: calc(72vw); }
-    }
-
-    .chatboxwrapp {
-        padding: 0;
-        height: 99%;
-    }
-
-    .chatboxsend {
-        padding: 0 6px;
-    }
-
-    .chatsend {
-        right: 0.4rem;
-    }
-    
-    .centerMobile, .mobileTopBar {
-        border-top-left-radius: 10px;
-    }
-
-    .chatright {
-        display: none;
+        100% { left: calc(55vw); }
     }
 }
