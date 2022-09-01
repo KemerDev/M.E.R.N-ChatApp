@@ -13,9 +13,6 @@ export default function Login() {
 
     const [values, setValues] = useState({Email : "", Password : ""})
 
-    useEffect(() => {
-        localStorage.clear()
-    }, [])
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name] : e.target.value})

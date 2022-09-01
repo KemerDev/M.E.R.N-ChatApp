@@ -173,13 +173,13 @@ const server = app.listen(process.env.PORT || 8800, () => {
 
 const io = require("socket.io")(server, {cors: {origin: '*',}})
 
-var users = []
+var users = [] || undefined
 
 // μεθοδος για την εισαγωγη των χρηστων και 
 // το id του socket 
 const userConnection = (userId, socketId) => {
-  if (!users.includes({userId, socketId})){
-		users.push({userId, socketId})
+  if (!users?.includes({userId, socketId})){
+		users?.push({userId, socketId})
   }
 }
 
@@ -189,7 +189,7 @@ const removeUser = (socketId) => {
 }
 
 const getUser = (userId) => {
-    return users.find(user=>user.userId === userId)
+    return users?.find(user=>user.userId === userId)
 }
 
 io.on("connection", (socket) =>{
@@ -219,7 +219,7 @@ io.on("connection", (socket) =>{
   socket.on("userDisconnect", (userId) => {
     let user = getUser(userId)
 
-    users = removeUser(user.socketId)
+    users = removeUser(user?.socketId)
     io.emit("getUserCon", users)
   })
 

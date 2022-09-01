@@ -1,6 +1,5 @@
-import React,{useContext, useState} from 'react'
+import React,{useState} from 'react'
 import { useNavigate, Link } from "react-router-dom"
-import { UserContext } from "../../context/userContext/userContext"
 import { axiosInstance } from '../../config'
 import SettingsIcon from '@mui/icons-material/Settings'
 import './bottomProfile.css'
@@ -9,24 +8,23 @@ import './bottomProfile.css'
 export default function BottomProfile({socket, token}) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
 
-    const { user } = useContext(UserContext)
-
+    const user = JSON.parse(localStorage.getItem('userData'))
     const navigate = useNavigate()
 
     const DropdownItems = ({props, path}) => {
-        const handleLogout = async (e) => {
+        const handleLogout = (e) => {
             e.preventDefault(e)
     
-            try {
-                await axiosInstance.post("/api/v1/users/logout/" + user._id,{
-                    headers: {authorization : "Bearer "+token}
-                })
+            axiosInstance.post("/api/v1/users/logout/" + user._id,{
+                headers: {authorization : "Bearer "+token}
+            }).then((response) => {
                 socket.emit("userDisconnect", user._id)
                 localStorage.clear()
                 navigate("/login")
-            } catch (err) {
-                console.log(err.response)
-            }
+                window.location.reload(false)
+            }).catch((error) => {
+                console.log(error)
+            })
         }
 
         return (

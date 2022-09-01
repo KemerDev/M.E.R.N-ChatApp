@@ -1,5 +1,5 @@
 import {axiosInstance} from "./config"
-import axios from "axios"
+import jwt from 'jwt-decode'
 
 // api κληση για την συνδεση του χρηστη
 export const logincall = (userCreds, dispatch) => {
@@ -8,6 +8,7 @@ export const logincall = (userCreds, dispatch) => {
     axiosInstance.post("/api/v1/auth/login", userCreds)
         .then(res => {
             const token = res.headers["x-auth"].split(" ")[1]
+            localStorage.setItem('userData', JSON.stringify(jwt(token)))
             dispatch({ type:"LOGIN_SUCCESS" , payload:token})
         })
         .catch(function (err) {
@@ -19,7 +20,10 @@ export const logincall = (userCreds, dispatch) => {
 
 // api κληση για να παρουμε το array με ολους τους φιλους
 
-export const friendsCall = (userCreds) => {
+export const friendsCall = (userCreds, frienDispatch) => {
+
+    frienDispatch({type:"FRIENDS_START"})
+
     axiosInstance.get("/api/v1/users/friends/"+userCreds.dataId, {
         headers: {authorization : "Bearer "+userCreds.dataToken,
         'Cache-Control': 'no-cache',
@@ -28,10 +32,11 @@ export const friendsCall = (userCreds) => {
         }
     }).then(res => {
         const friends = res.data
-        localStorage.setItem("friends", JSON.stringify(friends))
+        frienDispatch({type:"FRIENDS_SUCCESS", payload: friends})
+        
     }).catch(function (err) {
         if (err.response) {
-            console.log(err.response)
+            frienDispatch({type:"FRIENDS_FAIL", payload: err.response})
         }
     })
 }

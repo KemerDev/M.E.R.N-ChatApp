@@ -1,31 +1,75 @@
 import React,{useContext, useEffect, useState} from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { UserContext} from '../../context/userContext/userContext'
+import { AuthContext } from '../../context/authContext/authContext'
+import { ConvContext } from '../../context/convContext/convContext'
+import { MessContext } from '../../context/messContext/messContext'
+import { FrienContext } from '../../context/frienContext/frienContext'
+import { friendsCall, conversationsCall, messagesCall } from '../../apiCalls'
 import Topbar from '../../components/topbar/Topbar'
 import Conversation from '../../components/conversations/Conversation'
 import BottomProfile from '../../components/bottomProfile/BottomProfile'
-import './home.css'
 import MenuIcon from '@mui/icons-material/Menu'
+import './home.css'
 
 export default function Home({socket}) {
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
-    const {user} = useContext(UserContext)
+    const { token } = useContext(AuthContext)
+    const { conversations, convDispatch } = useContext(ConvContext)
+    const { messages, messDispatch } = useContext(MessContext)
+    const { friends, frienDispatch } = useContext(FrienContext)
 
-    const friends = JSON.parse(localStorage.getItem('friends'))
+    const user = JSON.parse(localStorage.getItem('userData'))
     
     const [usersOnline, setUsersOnline] = useState([])
     const [conversation, setConversation] = useState()
     const [styleMobile, setStyleMobile] = useState("mainFriendsChatIn")
 
     useEffect(() => {
+        if (token) {
+            friendsCall (
+            {
+                dataId: user._id,
+                dataToken: token,
+            },
+            frienDispatch
+            )
+        }
+    }, [token, user._id])
+
+    useEffect(() => {
+        if (token) {
+            conversationsCall (
+            {
+                dataId: user._id,
+                dataToken: token,
+            },
+            convDispatch
+            )
+        }
+    }, [token, user._id])
+
+    useEffect(() => {
+        if (token) {
+            messagesCall (
+            {
+                conver: conversations,
+                dataToken: token,
+            },
+            messDispatch
+            )
+        }
+    }, [token, conversations])
+
+    
+    useEffect(() => {
         socket.emit("userCon", user._id)
         socket.on("getUserCon", users => {
             setUsersOnline(
-                friends.filter((f) => 
-                    users.some((u) => u.userId !== f._id)))
+                friends?.filter((f) => 
+                    users?.some((u) => u.userId !== f._id)))
         })
-    }, [socket, user])
+    }, [socket, user._id])
 
     const handleConv = (conv) => {
         setConversation(conv)
@@ -33,16 +77,22 @@ export default function Home({socket}) {
 
     return (
         <>
-            <Topbar />
+            {friends ? <Topbar /> : null}
+            
             <div className="mainContainer">
                 <div className="mainWrap">
                     <div className="mainFriendsView">
                         <div className="mainFriendsViewWrap">
                             <span className='spanTopMes'>OPEN CHAT</span>
                             <div>
-                                <Conversation convHandle={handleConv} conversation={conversation}/>
+                                {
+                                    friends ?
+                                        <Conversation convHandle={handleConv} conversation={conversation}/>
+                                        :
+                                        null
+                                }
                             </div>
-                            <BottomProfile />
+                            <BottomProfile socket={socket} token={token}/>
                         </div>
                     </div>
                     {isMobile ?

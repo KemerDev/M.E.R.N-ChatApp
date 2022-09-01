@@ -1,7 +1,7 @@
 import React,{ useContext, useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
-import { UserContext } from "../../context/userContext/userContext"
+import { FrienContext } from '../../context/frienContext/frienContext'
 import {Search, Person, Chat, Notifications} from "@material-ui/icons"
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
@@ -20,8 +20,9 @@ export default function Topbar() {
 
     // περνουμε το token απο το context
     const {token} = useContext(AuthContext)
-    const {user} = useContext(UserContext)
-    const friends = JSON.parse(localStorage.getItem('friends'))
+    const {friends} = useContext(FrienContext)
+
+    const user = JSON.parse(localStorage.getItem('userData'))
 
     const getUsersFunc = async () => {
         try {

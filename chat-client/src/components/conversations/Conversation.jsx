@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { ConvContext } from '../../context/convContext/convContext'
 import { MessContext } from '../../context/messContext/messContext'
-import { UserContext } from '../../context/userContext/userContext'
+import { FrienContext } from '../../context/frienContext/frienContext'
 import {Chat} from "@material-ui/icons"
 import './conversation.css'
 
@@ -12,9 +12,9 @@ export default function Conversation({convHandle, conversation}) {
 
     const { conversations } = useContext(ConvContext)
     const { messages } = useContext(MessContext)
-    const { user } = useContext(UserContext)
+    const {friends} = useContext(FrienContext)
 
-    const friends = JSON.parse(localStorage.getItem('friends'))
+    const user = JSON.parse(localStorage.getItem('userData'))
 
     return (
         <>  

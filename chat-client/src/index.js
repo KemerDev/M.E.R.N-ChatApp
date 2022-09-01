@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client'
 import { AuthContextProv } from "./context/authContext/authContext"
 import { ConvContextProv } from './context/convContext/convContext'
 import { MessContextProv } from './context/messContext/messContext'
-import { UserContextProv } from './context/userContext/userContext'
+import { FrienContextProv } from './context/frienContext/frienContext'
 
 const rootElement = document.getElementById("root")
 const root = createRoot(rootElement)
@@ -12,12 +12,12 @@ const root = createRoot(rootElement)
 {/*δινουμε το context του user σε ολο το app*/}
 root.render(
   <AuthContextProv>
-    <UserContextProv>
-      <ConvContextProv>
-        <MessContextProv>
-          <App />
-        </MessContextProv>
-      </ConvContextProv>
-    </UserContextProv>
+      <FrienContextProv>
+        <ConvContextProv>
+          <MessContextProv>
+            <App />
+          </MessContextProv>
+        </ConvContextProv>
+      </FrienContextProv>
   </AuthContextProv>
 )

@@ -2,18 +2,18 @@ import React,{ useContext, useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import { axiosInstance} from "../../config"
 import { AuthContext } from "../../context/authContext/authContext"
-import { UserContext } from "../../context/userContext/userContext"
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import './settings.css'
 
 export default function Settings() {
 
     const {token} = useContext(AuthContext)
-    const {user, userDispatch} = useContext(UserContext)
 
     const [butPress, setButPress] = useState("")
     const [imageBrowseOpen, setImageBrowseOpen] = useState(false)
     const [coverBrowseOpen, setCoverBrowseOpen] = useState(false)
+
+    const user = JSON.parse(localStorage.getItem('userData'))
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
     const BPF = process.env.REACT_APP_PUBLIC_FOLDER_BACKGROUND
@@ -73,9 +73,8 @@ export default function Settings() {
                     setShowSuccess(response.data.message)
                 }).then(data => {
                     const new_user = {...user, username : values1.Username}
-                    localStorage.removeItem("userLocal")
-                    localStorage.setItem("userLocal", JSON.stringify(new_user))
-                    userDispatch({type:"USER_SUCCESS", payload: new_user})
+                    localStorage.removeItem("userData")
+                    localStorage.setItem("userData", JSON.stringify(new_user))
                 }).catch(error => {
                     setShowError(error.response.data.message)
                 })
@@ -92,9 +91,8 @@ export default function Settings() {
                     setShowSuccess(response.data.message)
                 }).then(data => {
                     const new_user = {...user, email : values2.Email}
-                    localStorage.removeItem("userLocal")
-                    localStorage.setItem("userLocal", JSON.stringify(new_user))
-                    userDispatch({type:"USER_SUCCESS", payload: new_user})
+                    localStorage.removeItem("userData")
+                    localStorage.setItem("userData", JSON.stringify(new_user))
                 }).catch(error => {
                     setShowError(error.response.data.message)
                 })
