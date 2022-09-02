@@ -34,6 +34,28 @@
     border-radius: 5px;
 }
 
+.convActive {
+    width: 11px;
+    height: 11px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: limegreen;
+    position: absolute;
+    top: 2px;
+    left: 30px;
+}
+
+.convInActive {
+    width: 11px;
+    height: 11px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: tomato;
+    position: absolute;
+    top: 2px;
+    left: 30px;
+}
+
 .convname {
     color: rgb(128, 128, 128);
     font-size: 16px;

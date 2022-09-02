@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import {BrowserRouter as Router,  Routes, Route, Navigate} from "react-router-dom"
-import {io} from "socket.io-client"
 import { AuthContext } from "./context/authContext/authContext"
 import Register from "./pages/register/Register"
 import Login from "./pages/login/Login"
@@ -15,10 +14,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={token ? <Home socket={io("ws://localhost:8800")}/> : <Navigate to="/login"/>}/>
-        <Route path="/login" element={token ? <Navigate to="/"/> : <Login/>}/>
-        <Route path="/register" element={token ? <Navigate to="/"/> : <Register/>}/>
-        <Route path="/" element={!token ? <Navigate to="/login"/> : <Home/>}/>
+        <Route exact path="/home" element={token ? <Home /> : <Navigate to="/login"/>}/>
+        <Route path="/login" element={token ? <Navigate to="/home"/> : <Login/>}/>
+        <Route path="/register" element={token ? <Navigate to="/home"/> : <Register/>}/>
+        <Route path="/home" element={!token ? <Navigate to="/login"/> : <Home/>}/>
         <Route path="/settings" element={<Settings />}/>
       </Routes>
     </Router>

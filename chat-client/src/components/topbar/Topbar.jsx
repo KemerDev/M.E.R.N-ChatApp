@@ -273,7 +273,7 @@ export default function Topbar() {
         <div className = "topContainer">
             {/* αριστερα του header*/}
             <div className = "topLeft">
-                <Link to="/" style={{textDecoration: "none"}}>
+                <Link to="/home" style={{textDecoration: "none"}}>
                     <span className="topLogo">TextMe</span>
                 </Link>
             </div>

@@ -18,7 +18,19 @@
     cursor: pointer;
 }
 
+.bottomActive {
+    width: 11px;
+    height: 11px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: limegreen;
+    position: absolute;
+    top: 4px;
+    left: 35px;
+}
+
 .bottomUsername {
+    margin-left: 10px;
     flex: 0.3;
     color: #FFFFFF;
     font-size: 15px;
@@ -95,6 +107,11 @@
     .dropdownLeft {
         left: 14%;
         bottom: 10%;
+    }
+
+    .bottomActive {
+        top: 4px;
+        left: 30px;
     }
     
 }

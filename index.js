@@ -171,56 +171,50 @@ const server = app.listen(process.env.PORT || 8800, () => {
     console.log("Backend Server is running")
 })
 
-const io = require("socket.io")(server, {cors: {origin: '*',}})
+const io = require("socket.io")(server, {cors: {origin: 'http://localhost:8800',}})
 
-var users = [] || undefined
-
-// μεθοδος για την εισαγωγη των χρηστων και 
-// το id του socket 
-const userConnection = (userId, socketId) => {
-  if (!users?.includes({userId, socketId})){
-		users?.push({userId, socketId})
+// web socket middleware, checks user id and allows connection
+io.use((socket, next) => {
+  const userId = socket.handshake.auth.userId
+  if (!userId) {
+    return next(new Error("Invalid Id"))
   }
-}
 
-// μεθοδος για την αφαιρεση του χρηστη
-const removeUser = (socketId) => {
-    users = users.filter(user=>user.socketId !== socketId)
-}
-
-const getUser = (userId) => {
-    return users?.find(user=>user.userId === userId)
-}
+  socket.userId = userId
+  next()
+})
 
 io.on("connection", (socket) =>{
+  var users = []
   // παρε το id του χρηστη απο τον client
-  socket.on("userCon", userId => {
-    userConnection(userId, socket.id)
-    // παρε το id του socket και στειλτο στον client
-    io.emit("getUserCon", users)
-  })
+  for (let [id, socket] of io.of("/").sockets) {
+    users.push({
+      socketId : id,
+      userId : socket.userId
+    })
+  }
+
+  // στειλε ολους τους συνδεμενους χρηστες στον client
+  io.emit("users", users)
 
   // παρε το αντικειμενο senderId, receiverId, text
   // απο τον client
-  socket.on("sendMsg", ({data, conversationId, initMess, read}) => {
-    let user = getUser(data.receiverId)
-
+  socket.on("sendMsg", ({data, conversationId, initMess, read, to}) => {
     // στειλε σε ολους τους συνδεμενους χρηστες
     // το αντικειμενο senderId και text
-    io.to(user.socketId).emit("getMsg", {
+    console.log(data, to)
+    io.to(to).emit("getMsg", {
       initMess,
       conversationId,
       read,
       data,
+      from : socket.id
     })
   })
 
-  // αποσυνδεσε τον χρηστη απο τον σερβερ
-  socket.on("userDisconnect", (userId) => {
-    let user = getUser(userId)
+  socket.on("disc", (User) => {
+    users = users.filter(us => us.userId === User.userId)
 
-    users = removeUser(user?.socketId)
-    io.emit("getUserCon", users)
+    io.emit("users", users)
   })
-
 })

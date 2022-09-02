@@ -378,7 +378,7 @@ export default function Settings() {
 
                     <div className="settingCont">
                         <div className="settingWrap">
-                            <Link to="/">
+                            <Link to="/home">
                                 <div className="exitButtonCont">
                                     <div className="exitButtonWrap">
                                         <span>✖</span>

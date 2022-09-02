@@ -5,7 +5,7 @@ import { FrienContext } from '../../context/frienContext/frienContext'
 import {Chat} from "@material-ui/icons"
 import './conversation.css'
 
-export default function Conversation({convHandle, conversation}) {
+export default function Conversation({convHandle, conversation, usersOnline}) {
     
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
     const BPF = process.env.REACT_APP_PUBLIC_FOLDER_BACKGROUND
@@ -22,6 +22,15 @@ export default function Conversation({convHandle, conversation}) {
                 <div className="convcontain" onClick={() => convHandle(con)}>
                     <img src={BPF + u.coverPic} alt='' crossOrigin='anonymous' className='backImg' />
                     <img src={PF + u.profilePic}  alt='' crossOrigin='anonymous' className="convimg" />
+                    {usersOnline.length > 0 ? 
+                        usersOnline.map((on) => on.userId === u._id ? 
+                            <div className={"convActive"}></div>
+                            :
+                            <div className={"convInActive"}></div>
+                        )
+                        : 
+                        <div className={"convInActive"}></div>
+                    }
                     <span className="convname">{u.username}</span>
 
                     <div className="convRightNotif">

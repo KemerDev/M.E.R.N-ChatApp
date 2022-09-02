@@ -11,6 +11,7 @@
     height: 95%;
     border-radius: 10px;
     background-color:  #2F3136;
+    display: flex;
 }
 
 .mainFriendsView {
@@ -18,8 +19,7 @@
     background-color: #383b41;
     border-top-left-radius: 10px;
     overflow-y: scroll;
-    float: left;
-    width: 30%;
+    flex: 0.25;
     height: 100%;
 }
 
@@ -39,8 +39,7 @@
 
 .mainFriendsChat {
     position: relative;
-    float: left;
-    width: 60%;
+    flex: 1;
     height: 100%;
 }
 
@@ -48,6 +47,9 @@
     width: 100%;
     height: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .mainFriendsChatWrapp > span {
@@ -56,6 +58,20 @@
     color: white;
     font-size: 25px;
     font-weight: 500;
+}
+
+.mainFriendsChatProps {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #292B2F;
+}
+
+.mainFriendsChatProps > span {
+    margin-left: 10px;
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
 }
 
 @media screen and (max-width: 768px) {
@@ -73,7 +89,7 @@
     }
 
     .mainFriendsView {
-        width: 60%;
+        flex: 0.6;
     }
 
     .mainFriendsChat {
@@ -109,9 +125,22 @@
         font-weight: 500;
     }
 
+    .mainFriendsChatProps {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        background-color: #292B2F;
+    }
+
+    .mainFriendsChatProps > span {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 500;
+        color: white;
+    }
+
     .menuBars {
-        float: left;
-        margin: 10px 0 0 10px;
+        margin: 0 10px 0 10px;
         color: #F8F8FA;
         cursor: pointer;
     }

@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
 import { useNavigate, Link } from "react-router-dom"
 import { axiosInstance } from '../../config'
+import socket from '../../socket'
 import SettingsIcon from '@mui/icons-material/Settings'
 import './bottomProfile.css'
 
 
-export default function BottomProfile({socket, token}) {
+export default function BottomProfile({token, usersOnline}) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
 
     const user = JSON.parse(localStorage.getItem('userData'))
@@ -14,11 +15,15 @@ export default function BottomProfile({socket, token}) {
     const DropdownItems = ({props, path}) => {
         const handleLogout = (e) => {
             e.preventDefault(e)
-    
+
+            const logoutUser = usersOnline.find(us => us.id === user._id)
+            socket.emit("disc", {
+                logoutUser
+            })
+            
             axiosInstance.post("/api/v1/users/logout/" + user._id,{
                 headers: {authorization : "Bearer "+token}
             }).then((response) => {
-                socket.emit("userDisconnect", user._id)
                 localStorage.clear()
                 navigate("/login")
                 window.location.reload(false)
@@ -35,7 +40,7 @@ export default function BottomProfile({socket, token}) {
     const DropdownMenu = () => {
         return (
             <div className="dropdownLeft">
-                <DropdownItems props="Profile" path="/"/>
+                <DropdownItems props="Profile" path="/home"/>
                 <hr style={{margin:"2px 2%", color:"white"}}></hr>
                 <DropdownItems props="Log out" path="/login"/>
             </div>
@@ -47,6 +52,7 @@ export default function BottomProfile({socket, token}) {
         return (
             <div>
                 <img src={PF + user.profilePic} onClick={() => setOpen(!open)} crossOrigin="anonymous" alt="" className="bottomImg" />
+                <div className={"bottomActive"}></div>
                 {open && props}
             </div>
         )
