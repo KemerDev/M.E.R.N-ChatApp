@@ -16,6 +16,8 @@ export default function Conversation({convHandle, conversation, usersOnline}) {
 
     const user = JSON.parse(localStorage.getItem('userData'))
 
+    console.log(friends)
+
     return (
         <>  
             {friends.map((u) => (conversations.map((con) => (con.members.map((t) => (u._id.includes(t) ?

@@ -1,4 +1,5 @@
 .chatMainCont {
+    padding: 5px;
     height: 100%;
     overflow-y: scroll;
 }

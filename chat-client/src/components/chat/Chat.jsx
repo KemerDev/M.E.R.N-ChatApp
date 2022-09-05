@@ -13,12 +13,6 @@ export default function Chat({conversation, usersOnline}) {
 
     const scrollBot = useRef(null)
 
-    const currentChat = messages.find((ms) => {
-        if (ms.conversationId !== conversation._id) {
-            return ms
-        }
-    })
-
     useEffect(() => {
         socket.on('getMsg', content => {
             for (let i in usersOnline) {
@@ -70,16 +64,19 @@ export default function Chat({conversation, usersOnline}) {
     }, [socketGetMsg])
 
     useEffect(() => {
-        scrollBot.current?.scrollIntoView(true)
-    }, [socketGetMsg])
+        scrollBot.current?.scrollIntoView(false)
+    }, [conversation, socketGetMsg])
 
     return (
         <>
             {socketGetMsg ? <audio ref={audio} src={SPF + "message_receive.mp3"} crossOrigin="anonymous" controls style={{display: 'none'}} /> : null}
-            <div ref={scrollBot} className="chatMainCont">
-                {
-                    currentChat.map((msg) => <Message message={msg}/>)
-                }
+            <div className="chatMainCont">
+                <div ref={scrollBot}>
+                    {
+                        messages.map((mes) => mes.map((msg) => msg.conversationId === conversation._id ?
+                        <Message message={msg}/> : null))
+                    }
+                </div>
             </div>
         </>
     )

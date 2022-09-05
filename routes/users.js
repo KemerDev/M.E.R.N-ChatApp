@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const User = require("../models/User")
+const Conversation = require("../models/Conversation")
 const path = require('path')
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -345,8 +346,17 @@ router.put("/:id/friend", verify_token, async (req,res) => {
                 await Fuser.updateOne({ $push:{ friends:req.body.userId } })
                 await Cuser.updateOne({ $push:{ friends:req.params.id } })
                 await Fuser.updateOne({ $pull:{ pendingAc:req.body.userId } })
+                await Cuser.updateOne({ $pull:{ additionAc:req.params.id } })
 
-                res.status(200).send({message : "User has been added"})
+                const newConv = new Conversation({
+                    members:[req.params.id, req.body.userId],
+                })
+
+                await newConv.save()
+
+                const friend = {"_id" : Cuser._id, "username" : Cuser.username, "profilePic" : Cuser.profilePic, "coverPic" : Cuser.coverPic}
+
+                res.status(200).send({message : "User has been added" , friend : friend})
             } else {
                 res.status(403).send({message : "You are already friends"})
             }

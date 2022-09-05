@@ -9,6 +9,7 @@
 }
 
 .topLeft {
+    margin-left: 80px;
     flex: 0.1;
 }
 
@@ -48,9 +49,138 @@
     outline: none;
 }
 
+.foundContainer {
+    position: absolute;
+    display: none;
+    width: 20rem;
+    top: 100%;
+    left: 30%;
+    padding: 10px;
+    background-color: #555555;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.foundContainer > span {
+    margin-left: 10%;
+    color: white;
+}
+
+.foundWrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.foundIdiv {
+    position: relative;
+    display: flex;
+    margin: 3px;
+    align-items: center;
+    height: 3.125rem;
+    color: white;
+    border: solid #423939;
+    border-width: 0.1rem;
+    border-radius: 25px;
+}
+
+.foundBackImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+.foundConvImg {
+    width: 2.125rem;
+    height: 2.125rem;
+    margin-right: 20px;
+    margin: 0 20px 0 10px;
+    border-radius: 50%;
+}
+
+.foundName {
+    flex: 1;
+}
+
+.foundAddContainer {
+    background-color: #3f4040;
+    flex: 0.4;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: teal;
+}
+
+.foundAddContainer:hover {
+    -webkit-animation: animateHeart 2.5s infinite;
+    animation: animateHeart 2.5s infinite;
+}
+
+@-webkit-keyframes animateHeart {
+    0% {
+      -webkit-transform: scale(0.8);
+    }
+    5% {
+      -webkit-transform: scale(0.9);
+    }
+    10% {
+      -webkit-transform: scale(0.8);
+    }
+    15% {
+      -webkit-transform: scale(1);
+    }
+    50% {
+      -webkit-transform: scale(0.8);
+    }
+    100% {
+      -webkit-transform: scale(0.8);
+    }
+}
+
+@keyframes animateHeart {
+    0% {
+      transform: scale(0.8);
+    }
+    5% {
+      transform: scale(0.9);
+    }
+    10% {
+      transform: scale(0.8);
+    }
+    15% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(0.8);
+    }
+}
+
+.foundCancelContainer {
+    background-color: #ff2929;
+    flex: 0.4;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+}
+
 
 @media screen and (max-width: 768px) {
     .topLeft {
+        margin: 0;
         flex: 0.1;
     }
 
@@ -73,6 +203,43 @@
         width: 80%;
         border: none;
         font-size: 18px;
+    }
+
+    .foundContainer {
+        width: 15rem;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        text-align: center;
+    }
+    
+    .foundContainer > span {
+        margin: 0;
+        color: white;
+    }
+    
+    .foundIdiv {
+        height: 2.7rem;
+    }
+    
+    .foundConvImg {
+        flex: 0.1;
+        width: 1.9rem;
+        height: 1.9rem;
+    }
+    
+    .foundName {
+        flex: 0.2;
+    }
+    
+    .foundAddContainer {
+        flex: 0.3;
+        margin-left: auto;
+    }
+
+    .foundCancelContainer {
+        flex: 0.3;
+        margin-left: auto;
     }
 }
 

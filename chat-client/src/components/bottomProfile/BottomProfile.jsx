@@ -42,6 +42,10 @@ export default function BottomProfile({token, usersOnline}) {
             <div className="dropdownLeft">
                 <DropdownItems props="Profile" path="/home"/>
                 <hr style={{margin:"2px 2%", color:"white"}}></hr>
+                <DropdownItems props="Friends" path="/friends"/>
+                <hr style={{margin:"2px 2%", color:"white"}}></hr>
+                <DropdownItems props="Settings" path="/settings"/>
+                <hr style={{margin:"2px 2%", color:"white"}}></hr>
                 <DropdownItems props="Log out" path="/login"/>
             </div>
         )
