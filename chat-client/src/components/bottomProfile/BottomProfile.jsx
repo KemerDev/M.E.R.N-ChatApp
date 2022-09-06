@@ -1,8 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { useNavigate, Link } from "react-router-dom"
 import { axiosInstance } from '../../config'
 import socket from '../../socket'
 import SettingsIcon from '@mui/icons-material/Settings'
+import {Person} from "@material-ui/icons"
 import './bottomProfile.css'
 
 
@@ -62,13 +63,57 @@ export default function BottomProfile({token, usersOnline}) {
         )
     }
 
+    const FriendsIcon = () => {
+        const [pendingAdds, setPendingAdds] = useState([])
+
+        const makeReq = async () => {
+            try {
+                const res = await axiosInstance.get("/api/v1/users/getRequests/" + user._id, {
+                    headers : {authorization : "Bearer "+token}
+                })
+    
+                setPendingAdds(res.data)
+    
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        useEffect(() => {
+            makeReq()
+        }, [])
+    
+        setInterval(makeReq, 120000)
+
+        return (
+            <>
+                <div className="friendsIconContainer">
+                    <Link to="/friends">
+                        <Person className='friendsIcon'/>
+                        <div className="friendNotif">
+                            <span className="friendText">{pendingAdds.length}</span>
+                        </div>
+                        <div className="friendLez">
+                            <span>Friends Pending</span>
+                        </div>
+                    </Link>
+                </div>
+            </>
+        )
+    }
+
     return (
-        <div className="bottomProfile">
+    <div className="bottomProfile">
         <ProfileIcon props={<DropdownMenu/>}/>
         <span className='bottomUsername'>{user.username}</span>
+        <FriendsIcon />
         <div className='settingsIconContainer'>
             <Link to="/settings">
                 <SettingsIcon className='settingsIcon'/>
+                <div className="settingsLez">
+                    <span>Users</span>
+                    <span>Setting</span>
+                </div>
             </Link>
         </div>
     </div>

@@ -16,8 +16,6 @@ export default function Conversation({convHandle, conversation, usersOnline}) {
 
     const user = JSON.parse(localStorage.getItem('userData'))
 
-    console.log(friends)
-
     return (
         <>  
             {friends.map((u) => (conversations.map((con) => (con.members.map((t) => (u._id.includes(t) ?
@@ -42,7 +40,7 @@ export default function Conversation({convHandle, conversation, usersOnline}) {
                             messages.map((m) => con._id === m[0]?.conversationId &&
                                 m.filter(f => f.read === false && f.data.sender !== user._id).length
                             )
-                        }</p></span> : undefined}
+                        }</p></span> : <span className="ItemNotifCount"><p>0</p></span>}
                     </div>
                 </div>
                 : null

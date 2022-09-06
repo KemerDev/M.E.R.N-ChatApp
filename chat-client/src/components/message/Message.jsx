@@ -19,7 +19,7 @@ export default function Message({message}) {
                             if (fr._id === message.data.sender) {
                                 return fr.profilePic
                             }
-                        }) : PF + user.profilePic} crossOrigin="anonymous" alt="" className="messimg" />
+                        }).join("") : PF + user.profilePic} crossOrigin="anonymous" alt="" className="messimg" />
                     <p className="messtext">{message.data.text}</p>
                 </div>
                 <div className="messbot">{format(message.createdAt)}</div>

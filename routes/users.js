@@ -54,8 +54,8 @@ const verify_token = (req, res, next) => {
     })
 }
 
-// κληση API για την επανεκδοση του access key και καινουργιου refresh key
-router.post("/refresh/:id", verify_token, async (req, res) => {
+// κληση API για την επανεκδοση του access key
+router.post("/refresh/:id", async (req, res) => {
 
     const refreshToken = req.cookies.refreshCookie
 
@@ -66,14 +66,12 @@ router.post("/refresh/:id", verify_token, async (req, res) => {
 
     // σε περιπτωση κλωπης του refresh token δεν μπορει να ξανα χρησημοποιηθει για την δημιουργια
     // καινουργιου access token
-    if (tokenExist.refresh_token !== refreshToken) return res.status(403).json("refresh token is not valid")
-
+    if (tokenExist.refresh_token !== refreshToken) return res.status(403).send({message : "refresh token not valid"})
 
     const public_key = fs.readFileSync(path.join(process.cwd(), "keys/refPublic.pem"))
 
     jwt.verify(refreshToken, public_key, async (err, user) => {
         err
-
         const newAccess = createAccessToken(user)
 
         //await User.findByIdAndUpdate(req.user._id, {$set: {refresh_token : newRefresh} })

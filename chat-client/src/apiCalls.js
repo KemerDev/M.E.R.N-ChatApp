@@ -5,6 +5,7 @@ import jwt from 'jwt-decode'
 export const logincall = (userCreds, dispatch) => {
     dispatch({type:"LOGIN_START"})
 
+    console.log("test")
     axiosInstance.post("/api/v1/auth/login", userCreds)
         .then(res => {
             const token = res.headers["x-auth"].split(" ")[1]

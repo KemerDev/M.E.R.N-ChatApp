@@ -81,27 +81,34 @@ export default function Friends() {
 
             return (
                         <>
-                            {pendingAdds.map((pe, index) =>
-                                <div className="pendingAddUsers" key={index}>
-                                    {
-                                        allUsers.map(us => {
-                                            if (us._id === pe) {
-                                                return (
-                                                    <>
-                                                        <img src={BPF + us.coverPic} crossOrigin="anonymous" alt='' className="pendingBackImg"/>
-                                                        <img src={PF + us.profilePic} crossOrigin="anonymous"  alt='' className="pendingConvImg"/>
-                                                        <span className="pendingName">{us.username}</span>
-                                                        <div className="pendingButtons">
-                                                            <button onClick={(e) => handleAcceptReq(e, pe)}>Accept</button>
-                                                            <button onClick={(e) => handleCancelReq(e, pe)}>Decline</button>
-                                                        </div>
-                                                    </>
-                                                )
-                                            }
-                                        })
-                                    }
-                                </div>
-                            )}
+                            {pendingAdds.length > 0 ?
+                                pendingAdds.map((pe, index) =>
+                                    <div className="pendingAddUsers" key={index}>
+                                        {
+                                            allUsers.map(us => {
+                                                if (us._id === pe) {
+                                                    return (
+                                                        <>
+                                                            <img src={BPF + us.coverPic} crossOrigin="anonymous" alt='' className="pendingBackImg"/>
+                                                            <img src={PF + us.profilePic} crossOrigin="anonymous"  alt='' className="pendingConvImg"/>
+                                                            <span className="pendingName">{us.username}</span>
+                                                            <div className="pendingButtons">
+                                                                <button onClick={(e) => handleAcceptReq(e, pe)}>Accept</button>
+                                                                <button onClick={(e) => handleCancelReq(e, pe)}>Decline</button>
+                                                            </div>
+                                                        </>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                    </div>
+                                )
+
+                                : 
+                                    <span style={{width: '100%', color: 'white', fontSize: '15px', fontWeight: '500', textAlign: 'center'}}>No Friends Pending Accept</span>
+                            }
+
+
                         </>
             )
         }

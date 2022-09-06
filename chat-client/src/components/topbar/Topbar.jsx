@@ -2,7 +2,7 @@ import React,{ useContext, useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import { FrienContext } from '../../context/frienContext/frienContext'
-import {Search, Person, Chat, Notifications} from "@material-ui/icons"
+import {Search} from "@material-ui/icons"
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import { axiosInstance } from "../../config"

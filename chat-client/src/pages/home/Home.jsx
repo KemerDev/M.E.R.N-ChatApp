@@ -1,4 +1,5 @@
 import React,{useContext, useEffect, useState} from 'react'
+import { useNavigate } from "react-router-dom"
 import { useMediaQuery } from 'react-responsive'
 import { AuthContext } from '../../context/authContext/authContext'
 import { ConvContext } from '../../context/convContext/convContext'
@@ -13,12 +14,13 @@ import BottomProfile from '../../components/bottomProfile/BottomProfile'
 import ChatInput from '../../components/chatInput/ChatInput'
 import Chat from '../../components/chat/Chat'
 import MenuIcon from '@mui/icons-material/Menu'
+import jwt from 'jwt-decode'
 import './home.css'
 
 export default function Home() {
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
-    const { token } = useContext(AuthContext)
+    const { token, dispatch } = useContext(AuthContext)
     const { conversations, convDispatch } = useContext(ConvContext)
     const { messages, messDispatch } = useContext(MessContext)
     const { friends, frienDispatch } = useContext(FrienContext)
@@ -28,6 +30,44 @@ export default function Home() {
     const [conversation, setConversation] = useState()
     const [styleMobile, setStyleMobile] = useState("mainFriendsChatIn")
     const [usersOnline, setUsersOnline] = useState([])
+
+    const navigate = useNavigate()
+    
+    const disconnectErr = async () => {
+        const logoutUser = usersOnline.find(us => us.id === user._id)
+        try {
+            await axiosInstance.post("/api/v1/users/logout/"+user._id,{
+                headers: {authorization : "Bearer "+token}
+            })
+
+            socket.emit("disc", {
+                logoutUser
+            })
+            localStorage.clear()
+            navigate("/login")
+            window.location.reload(false)
+        } catch (err) {
+            console.log(err.response)
+        }
+    }
+
+    const check_expired = setInterval(async () => {
+        let current_date = new Date()
+        let current_seconds = Math.round(current_date.getTime() / 1000)
+
+        if (user.exp < current_seconds) {
+            axiosInstance.post("/api/v1/users/refresh/"+user._id, "",
+            ).then(res => {
+                const new_token = res.headers["x-auth"].split(" ")[1]
+                dispatch({ type:"LOGIN_SUCCESS" , payload:new_token})
+                localStorage.setItem('userData', JSON.stringify(jwt(new_token)))
+                window.location.reload(false)
+            }).catch (err => {
+                console.log(err)
+            })
+        }
+        return () => clearInterval(check_expired)
+    }, 1000)
 
     // socket authorize and connect
     useEffect(() => {

@@ -38,7 +38,63 @@
     z-index: 0;
 }
 
+.friendsIconContainer {
+    position: relative;
+    margin-left: 45%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.friendsIcon {
+    color: white;
+}
+
+.friendNotif {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: -5px;
+    right: -5px;
+    color: white;
+    background-color: red;
+    border-radius: 1000px;
+    display: flex;
+    align-items: center;
+}
+
+.friendText {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.friendLez {
+    position: absolute;
+    visibility: hidden;
+    width: 100px;
+    height: 40px;
+    top: -50px;
+    right: 0;
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #3E4249;
+}
+
+.friendLez > span {
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+}
+
+.friendsIconContainer:hover .friendLez {
+    visibility: visible;
+}
+
 .settingsIconContainer {
+    position: relative;
     margin-left: auto;
     margin-right: 10px;
     cursor: pointer;
@@ -50,6 +106,31 @@
 
 .settingsText {
     position: absolute;
+}
+
+.settingsLez {
+    position: absolute;
+    visibility: hidden;
+    width: 100px;
+    height: 40px;
+    top: -50px;
+    right: 0;
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #3E4249;
+}
+
+.settingsLez > span {
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+}
+
+.settingsIconContainer:hover .settingsLez {
+    visibility: visible;
 }
 
 .dropdownLeft {
@@ -112,6 +193,10 @@
     .bottomActive {
         top: 4px;
         left: 30px;
+    }
+
+    .friendsIconContainer {
+        margin-left: 20%;
     }
     
 }
