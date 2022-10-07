@@ -16,10 +16,28 @@
     outline: none;
 }
 
+.chatemoji {
+    height: 2.7rem;
+    color: white;
+    background-color: #40444B;
+    border: none;
+    cursor: pointer;
+}
+
+.chatimoji:hover {
+    opacity: 0.7;
+}
+
+.chatpicker {
+    position: absolute;
+    right: 0;
+    bottom: 2.4rem;
+}
+
 .chatsend {
     right: 0;
     width: 70px;
-    height: 2.5rem;
+    height: 2.7rem;
     border: none;
     cursor: pointer;
     background-color: teal;

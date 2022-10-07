@@ -4,10 +4,11 @@ import socket from '../../socket'
 import { AuthContext } from '../../context/authContext/authContext'
 import { MessContext } from '../../context/messContext/messContext'
 import { FrienContext } from '../../context/frienContext/frienContext'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt'
 
-import './chatInput.css' 
-  
-
+import './chatInput.css'
 
 export default function ChatInput({conversation, usersOnline}) {
     const { token } = useContext(AuthContext)
@@ -18,6 +19,7 @@ export default function ChatInput({conversation, usersOnline}) {
     const currentUser = friends.find((fr) => conversation.members.map((member) => fr._id !== member._id))
 
     const [send, setSend] = useState("")
+    const [showEmojis, setShowEmojis] = useState(false)
 
     const handleSubmit = async (e, send) => {
         e.preventDefault()
@@ -78,11 +80,26 @@ export default function ChatInput({conversation, usersOnline}) {
         }
     }
 
+    const addEmoji = (e) => {
+        let sym = e.unified.split("-")
+        let codesArray = []
+        sym.forEach((el) => codesArray.push("0x" + el))
+        let emoji = String.fromCodePoint(...codesArray)
+        setSend(send + emoji)
+    }
+
     return (
-        <>
+        <>  
+            {console.log(send)}
             <div className="chatboxsend">
                 <input className="chatinput" onKeyDown={e => e.key === 'Enter' ? handleSubmit(e, send) : ''} onChange={(e) => setSend(e.target.value)} value={send} placeholder={!send ? "Write to # "+currentUser.username : ""}></input>
+                <button className="chatemoji" onClick={() => setShowEmojis(!showEmojis)} ><SentimentSatisfiedAltIcon /></button>
                 <button className="chatsend" onClick={e => {handleSubmit(e, send); setSend("")}}>Send</button>
+                {showEmojis && (
+                    <div className="chatpicker">
+                        <Picker onEmojiSelect={addEmoji} theme="dark"/>
+                    </div>
+                )}
             </div>
         </>
     )

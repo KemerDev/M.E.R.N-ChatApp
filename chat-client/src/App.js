@@ -15,10 +15,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/home" element={token ? <Home /> : <Navigate to="/login"/>}/>
-        <Route path="/login" element={token ? <Navigate to="/home"/> : <Login/>}/>
-        <Route path="/register" element={token ? <Navigate to="/home"/> : <Register/>}/>
-        <Route path="/home" element={!token ? <Navigate to="/login"/> : <Home/>}/>
+        <Route exact path="/" element={token ? <Home /> : <Navigate to="/login"/>}/>
+        <Route path="/login" element={token ? <Navigate to="/"/> : <Login/>}/>
+        <Route path="/register" element={token ? <Navigate to="/"/> : <Register/>}/>
+        <Route path="/" element={!token ? <Navigate to="/login"/> : <Home/>}/>
         <Route path="/settings" element={<Settings />}/>
         <Route path="/friends" element={<Friends />}/>
       </Routes>

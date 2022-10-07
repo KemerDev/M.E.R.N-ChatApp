@@ -131,7 +131,7 @@ export default function Friends() {
             {token ?      
                 <div className="friendsContainer">
                     <div className="friendsWrap">
-                        <Link to="/home">
+                        <Link to="/">
                             <div className="exitButtonCont">
                                 <div className="exitButtonWrap">
                                     <span>✖</span>
