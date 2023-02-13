@@ -13,8 +13,11 @@ import Conversation from '../../components/conversations/Conversation'
 import BottomProfile from '../../components/bottomProfile/BottomProfile'
 import ChatInput from '../../components/chatInput/ChatInput'
 import Chat from '../../components/chat/Chat'
+import Videoplayer from '../../components/videoPlayer/Videoplayer'
+import VideoCallIcon from '@mui/icons-material/VideoCall'
 import MenuIcon from '@mui/icons-material/Menu'
 import jwt from 'jwt-decode'
+import { decrypt, encrypt } from '../../cryptor'
 import './home.css'
 
 export default function Home() {
@@ -25,11 +28,12 @@ export default function Home() {
     const { messages, messDispatch } = useContext(MessContext)
     const { friends, frienDispatch } = useContext(FrienContext)
 
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
     
     const [conversation, setConversation] = useState()
     const [styleMobile, setStyleMobile] = useState("mainFriendsChatIn")
     const [usersOnline, setUsersOnline] = useState([])
+    const [videoOpen, setVideoOpen] = useState(false)
 
     const navigate = useNavigate()
     
@@ -59,8 +63,9 @@ export default function Home() {
             axiosInstance.post("/api/v1/users/refresh/"+user._id, "",
             ).then(res => {
                 const new_token = res.headers["x-auth"].split(" ")[1]
+                
+                localStorage.setItem('userData', encrypt(jwt(decrypt(new_token))))
                 dispatch({ type:"LOGIN_SUCCESS" , payload:new_token})
-                localStorage.setItem('userData', JSON.stringify(jwt(new_token)))
                 window.location.reload(false)
             }).catch (err => {
                 console.log(err)
@@ -163,6 +168,7 @@ export default function Home() {
             
             <div className="mainContainer">
                 <div className="mainWrap">
+                    {videoOpen ? <Videoplayer /> : null}
                     <div className="mainFriendsView">
                         <div className="mainFriendsViewWrap">
                             <span className='spanTopMes'>OPEN CHAT</span>
@@ -203,6 +209,7 @@ export default function Home() {
                                     {friends.map((fr) => conversation?.members.map((cn) => fr._id.includes(cn) ?     
                                         <span>@{fr.username}</span> : null
                                     ))}
+                                    {conversation ? <VideoCallIcon className='callIconProp' onClick={() => setVideoOpen(true)}/> : null}
                                 </div>
                                 {
                                     conversation ? 

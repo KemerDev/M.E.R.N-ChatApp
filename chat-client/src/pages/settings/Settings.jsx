@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { axiosInstance} from "../../config"
 import { AuthContext } from "../../context/authContext/authContext"
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
+import { decrypt } from "../../cryptor"
 import './settings.css'
 
 export default function Settings() {
@@ -13,7 +14,7 @@ export default function Settings() {
     const [imageBrowseOpen, setImageBrowseOpen] = useState(false)
     const [coverBrowseOpen, setCoverBrowseOpen] = useState(false)
 
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
     const BPF = process.env.REACT_APP_PUBLIC_FOLDER_BACKGROUND

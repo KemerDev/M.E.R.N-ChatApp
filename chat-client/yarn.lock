@@ -1126,16 +1126,6 @@
   dependencies:
     postcss-value-parser "^4.2.0"
 
-"@emoji-mart/data@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@emoji-mart/data/-/data-1.0.6.tgz#68f71be5e023653a3f9f73f4beadfd50848e2131"
-  integrity sha512-8wu3ec/kLCB0Y3K+pOKyY6Ob+xtQu3XhZvntdrpOTUQZ/PO6FW5PpFw7RE1kQ/up1fsVSJBl5mZ8Gs4SPwTYeg==
-
-"@emoji-mart/react@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@emoji-mart/react/-/react-1.0.1.tgz#46b6a2e92faf16fa9b7f9471f137fa2e3d1e8ac3"
-  integrity sha512-ALhLD96BOL5w+a4NI5NpmfqfF1aVjjj2qJE0dLst/OhjBfVmpteWNgn/h8LZy9ulU6AnbeS+13KnPFzDjCvRRw==
-
 "@emotion/babel-plugin@^11.7.1":
   version "11.9.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz#723b6d394c89fb2ef782229d92ba95a740576e95"
@@ -3021,14 +3011,6 @@ babel-preset-react-app@^10.0.1:
     babel-plugin-macros "^3.1.0"
     babel-plugin-transform-react-remove-prop-types "^0.4.24"
 
-babel-runtime@^6.26.0:
-  version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
-  integrity sha512-ITKNuq2wKlW1fJg9sSW52eepoYgZBggvOAHC0u/CYu/qxQ9EVzThCgR69BnSXLHjy2f7SY5zaQ4yt7H9ZVxY2g==
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.11.0"
-
 backo2@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/backo2/-/backo2-1.0.2.tgz#31ab1ac8b129363463e35b3ebb69f4dfcfba7947"
@@ -3522,11 +3504,6 @@ core-js-pure@^3.20.2, core-js-pure@^3.8.1:
   version "3.22.0"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.22.0.tgz#0eaa54b6d1f4ebb4d19976bb4916dfad149a3747"
   integrity sha512-ylOC9nVy0ak1N+fPIZj00umoZHgUVqmucklP5RT5N+vJof38klKn8Ze6KGyvchdClvEBr6LcQqJpI216LUMqYA==
-
-core-js@^2.4.0:
-  version "2.6.12"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
-  integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.19.2:
   version "3.22.0"
@@ -4108,19 +4085,6 @@ emittery@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.8.1.tgz#bb23cc86d03b30aa75a7f734819dee2e1ba70860"
   integrity sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
-
-emoji-mart@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-3.0.1.tgz#9ce86706e02aea0506345f98464814a662ca54c6"
-  integrity sha512-sxpmMKxqLvcscu6mFn9ITHeZNkGzIvD0BSNFE/LJESPbCA8s1jM6bCDPjWbV31xHq7JXaxgpHxLB54RCbBZSlg==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    prop-types "^15.6.0"
-
-emoji-mart@^5.2.2:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-5.2.2.tgz#1c093ffc19554dd6edfcfeec9aca43ff38bcc16e"
-  integrity sha512-BvcrX+Ps9MxSVEjnvxupclU3MBD6WVC4WZOY26csfC6oFdaWpFhdrzeVNVBmCLPOmzY1SE0aAsqZJRNVbZ1yhQ==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -7596,7 +7560,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-"prop-types@15.x.x - 16.x.x", prop-types@^15.0.0, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+"prop-types@15.x.x - 16.x.x", prop-types@^15.0.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7743,13 +7707,6 @@ react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
-
-react-input-emoji@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/react-input-emoji/-/react-input-emoji-4.2.0.tgz#9cbc477742e70eb0e1c2834bb223383b33f3ac4a"
-  integrity sha512-DaFJP6mrsh6KPfMXSNMAv05gXjSfw/j06SEx8d6cEMj8nGPzR3D4sAbSicTvvsrLppL+3v6l/eB6HfFp26tSJg==
-  dependencies:
-    emoji-mart "3.0.1"
 
 react-inspector@^5.1.0:
   version "5.1.1"
@@ -7958,11 +7915,6 @@ regenerate@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
-
-regenerator-runtime@^0.11.0:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
-  integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
 regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
   version "0.13.9"

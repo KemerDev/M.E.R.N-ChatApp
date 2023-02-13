@@ -3,6 +3,7 @@ import { ConvContext } from '../../context/convContext/convContext'
 import { MessContext } from '../../context/messContext/messContext'
 import { FrienContext } from '../../context/frienContext/frienContext'
 import {Chat} from "@material-ui/icons"
+import { decrypt } from "../../cryptor"
 import './conversation.css'
 
 export default function Conversation({convHandle, conversation, usersOnline}) {
@@ -14,7 +15,7 @@ export default function Conversation({convHandle, conversation, usersOnline}) {
     const { messages } = useContext(MessContext)
     const {friends} = useContext(FrienContext)
 
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
 
     return (
         <>  

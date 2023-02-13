@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import AuthReducer from "./authReducer";
+import { decrypt, encrypt } from "../../cryptor"
 
 //sharing all this infos with app.js
 const init_state = {

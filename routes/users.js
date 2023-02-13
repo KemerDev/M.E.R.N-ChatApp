@@ -2,6 +2,7 @@ const router = require("express").Router()
 const User = require("../models/User")
 const Conversation = require("../models/Conversation")
 const path = require('path')
+const crypto = require("crypto-js")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const fs = require('fs')
@@ -35,18 +36,29 @@ const createRefreshToken = (user) => {
         { algorithm : 'RS512', expiresIn : '7d'})
 }
 
-// μεθοδος για την επαληθευση του access token
-// αμα ο χρηστης δεν "κουβαλαει" αυτο το access token
-// τοτε δεν μπορει και να κανει της παρακατω ενεργειες
+const encrypt = (plaintext) => {
+    const ciphertext = crypto.AES.encrypt(JSON.stringify(plaintext), 'secret key 123').toString()
+
+    return ciphertext
+}
+
+const decrypt = (encryptedObject) => {
+    const decryptedObject = crypto.AES.decrypt(encryptedObject, 'secret key 123').toString(crypto.enc.Utf8)
+
+    return decryptedObject
+}
+
 const verify_token = (req, res, next) => {
     const authHeader = req.headers.authorization
 
     if (!authHeader) return res.status(401).json("You are not authorized")
     const access_jwt = authHeader.split(" ")[1]
 
+    const decrypt_access_jwt = decrypt(access_jwt)
+
     const public_key = fs.readFileSync(path.join(process.cwd(), "keys/accPublic.pem"))
 
-    jwt.verify(access_jwt, public_key, {algorithms : ['RS512']}, (err, user) => {
+    jwt.verify(JSON.parse(decrypt_access_jwt), public_key, {algorithms : ['RS512']}, (err, user) => {
         if (err)  return res.status(403).json("Token not valid")
 
         req.user = user
@@ -68,16 +80,16 @@ router.post("/refresh/:id", async (req, res) => {
     // καινουργιου access token
     if (tokenExist.refresh_token !== refreshToken) return res.status(403).send({message : "refresh token not valid"})
 
+    const decrypt_refresh_jwt = decrypt(refreshToken)
+
     const public_key = fs.readFileSync(path.join(process.cwd(), "keys/refPublic.pem"))
 
-    jwt.verify(refreshToken, public_key, async (err, user) => {
+    jwt.verify(JSON.parse(decrypt_refresh_jwt), public_key, async (err, user) => {
         err
-        const newAccess = createAccessToken(user)
+        const newAccess = encrypt(createAccessToken(user))
 
         //await User.findByIdAndUpdate(req.user._id, {$set: {refresh_token : newRefresh} })
 
-        // δημιουργια cookie για το refresh token δεν θελουμε
-        // να ειναι εβαλοτο σε επιθεσεις xss, CSRF
         res
         .set('x-auth', 'Bearer ' + newAccess)
         .status(200)

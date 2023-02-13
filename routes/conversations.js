@@ -3,19 +3,25 @@ const Conversation = require("../models/Conversation")
 const path = require('path')
 const jwt = require("jsonwebtoken")
 const fs = require('fs')
+const crypto = require('crypto-js')
 
-// μεθοδος για την επαληθευση του access token
-// αμα ο χρηστης δεν "κουβαλαει" αυτο το access token
-// τοτε δεν μπορει και να κανει της παρακατω ενεργειες
+const decrypt = (encryptedObject) => {
+    const decryptedObject = crypto.AES.decrypt(encryptedObject, 'secret key 123').toString(crypto.enc.Utf8)
+
+    return decryptedObject
+}
+
 const verify_token = (req, res, next) => {
     const authHeader = req.headers.authorization
 
     if (!authHeader) return res.status(401).json("You are not authorized")
     const access_jwt = authHeader.split(" ")[1]
 
+    const decrypt_access_jwt = decrypt(access_jwt)
+
     const public_key = fs.readFileSync(path.join(process.cwd(), "keys/accPublic.pem"))
 
-    jwt.verify(access_jwt, public_key, {algorithms : ['RS512']}, (err, user) => {
+    jwt.verify(JSON.parse(decrypt_access_jwt), public_key, {algorithms : ['RS512']}, (err, user) => {
         if (err)  return res.status(403).json("Token not valid")
 
         req.user = user
@@ -51,8 +57,6 @@ router.put("/:conversationId", verify_token, async (req, res) => {
         res.status(500).json(err)
     }
 })
-
-//get conv of user
 
 router.get("/:userId", verify_token, async (req, res) => {
     try {

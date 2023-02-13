@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import { FrienContext } from "../../context/frienContext/frienContext"
 import { axiosInstance } from '../../config'
+import { decrypt } from '../../cryptor'
 import './friends.css'
 
 export default function Friends() {
@@ -12,7 +13,7 @@ export default function Friends() {
     const { token } = useContext(AuthContext)
     const { friends, frienDispatch } = useContext(FrienContext)
 
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
 
     const [allUsers, setAllUsers] = useState([])
 

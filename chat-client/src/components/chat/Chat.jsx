@@ -10,24 +10,33 @@ export default function Chat({conversation, usersOnline}) {
     const { messages, messDispatch } = useContext(MessContext)
 
     const [socketGetMsg, setSocketGetMsg] = useState()
+    const [currentChat, setCurrentChat] = useState([])
 
     const scrollBot = useRef(null)
 
-    useEffect(() => {
-        socket.on('getMsg', content => {
-            for (let i in usersOnline) {
-                if (usersOnline[i].socketId === content.from) {
-                    setSocketGetMsg({
-                        initMess : content.initMess,
-                        conversationId : content.conversationId,
-                        read : content.read,
-                        data : content.data,
-                        createdAt : Date.now()
-                    })
-                }
+    socket.on('getMsg', content => {
+        for (let i in usersOnline) {
+            if (usersOnline[i].socketId === content.from) {
+                setSocketGetMsg({
+                    initMess : false,
+                    conversationId : content.conversationId,
+                    read : content.read,
+                    data : content.data,
+                    createdAt : Date.now()
+                })
+                break
             }
-        })
-    }, [])
+        }
+    })
+
+    useEffect(() => {
+        for (let i in messages) {
+            if (messages[i][0].conversationId === conversation._id) {
+                setCurrentChat(messages[i])
+                break
+            }
+        }
+    }, [messages, conversation])
 
     const audio = useRef(null)
     useEffect(() => {
@@ -38,7 +47,9 @@ export default function Chat({conversation, usersOnline}) {
             } catch (err) {
                 console.log(err)
             }
-            for (let i in conversation) {
+
+            setCurrentChat((state) => [...state, socketGetMsg])
+            /*for (let i in conversation) {
                 if (socketGetMsg !== null && socketGetMsg.conversationId === conversation._id) {
                     for (let i in messages) {
                         if (messages[i][0].conversationId === conversation._id) {
@@ -59,13 +70,13 @@ export default function Chat({conversation, usersOnline}) {
                         }
                     }
                 }
-            }
+            }*/
         }
     }, [socketGetMsg])
 
     useEffect(() => {
         scrollBot.current?.scrollIntoView(false)
-    }, [conversation, socketGetMsg])
+    }, [currentChat, socketGetMsg])
 
     return (
         <>
@@ -73,8 +84,8 @@ export default function Chat({conversation, usersOnline}) {
             <div className="chatMainCont">
                 <div ref={scrollBot}>
                     {
-                        messages.map((mes) => mes.map((msg) => msg.conversationId === conversation._id ?
-                        <Message message={msg}/> : null))
+                        currentChat.map((mes) => 
+                            <Message message={mes}/>)
                     }
                 </div>
             </div>

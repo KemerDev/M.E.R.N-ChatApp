@@ -6,6 +6,7 @@ import {Search} from "@material-ui/icons"
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import { axiosInstance } from "../../config"
+import { decrypt } from "../../cryptor"
 import "./topbar.css"
 
 // Πρωτα εφτιαξα αυτο
@@ -21,7 +22,7 @@ export default function Topbar() {
     const {token} = useContext(AuthContext)
     const {friends} = useContext(FrienContext)
 
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
 
     const getUsersFunc = async () => {
         try {
@@ -174,7 +175,7 @@ export default function Topbar() {
         <div className = "topContainer">
             {/* αριστερα του header*/}
             <div className = "topLeft">
-                <Link to="/home" style={{textDecoration: "none"}}>
+                <Link to="/" style={{textDecoration: "none"}}>
                     <span className="topLogo">TextMeUp</span>
                 </Link>
             </div>

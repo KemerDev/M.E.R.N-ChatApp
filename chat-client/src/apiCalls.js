@@ -1,26 +1,25 @@
 import {axiosInstance} from "./config"
 import jwt from 'jwt-decode'
+import { decrypt, encrypt } from "./cryptor"
 
-// api κληση για την συνδεση του χρηστη
 export const logincall = (userCreds, dispatch) => {
     dispatch({type:"LOGIN_START"})
 
-    console.log("test")
     axiosInstance.post("/api/v1/auth/login", userCreds)
         .then(res => {
             const token = res.headers["x-auth"].split(" ")[1]
-            localStorage.setItem('userData', JSON.stringify(jwt(token)))
+
+            localStorage.setItem('userData', encrypt(jwt(decrypt(token))))
             dispatch({ type:"LOGIN_SUCCESS" , payload:token})
         })
         .catch(function (err) {
             if (err.response) {
-                dispatch({ type:"LOGIN_FAIL" ,payload:err.response.data.message })
+                dispatch({ type:"LOGIN_FAIL", payload:err.response.data.message })
             }
         })
 }
 
 // api κληση για να παρουμε το array με ολους τους φιλους
-
 export const friendsCall = (userCreds, frienDispatch) => {
 
     frienDispatch({type:"FRIENDS_START"})

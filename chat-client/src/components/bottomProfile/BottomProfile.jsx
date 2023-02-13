@@ -4,13 +4,14 @@ import { axiosInstance } from '../../config'
 import socket from '../../socket'
 import SettingsIcon from '@mui/icons-material/Settings'
 import {Person} from "@material-ui/icons"
+import { decrypt } from '../../cryptor'
 import './bottomProfile.css'
 
 
 export default function BottomProfile({token, usersOnline}) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
 
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
     const navigate = useNavigate()
 
     const DropdownItems = ({props, path}) => {

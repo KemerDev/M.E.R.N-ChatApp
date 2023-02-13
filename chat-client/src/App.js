@@ -6,6 +6,7 @@ import Login from "./pages/login/Login"
 import Home from "./pages/home/Home"
 import Settings from "./pages/settings/Settings"
 import Friends from "./pages/friends/Friends"
+import { decrypt } from "./cryptor"
 
 
 function App() {

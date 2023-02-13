@@ -1,12 +1,13 @@
 import { useContext } from "react"
 import {format} from "timeago.js"
 import { FrienContext } from "../../context/frienContext/frienContext"
+import { decrypt } from "../../cryptor"
 import './message.css'
 
 export default function Message({message}) {
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER_IMAGES
-    const user = JSON.parse(localStorage.getItem('userData'))
+    const user = JSON.parse(decrypt(localStorage.getItem('userData')))
     const { friends } = useContext(FrienContext)
 
     return (

@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../models/User')
 const path = require('path')
+const crypto = require('crypto-js')
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const fs = require('fs')
@@ -26,6 +27,12 @@ const createRefreshToken = (user) => {
     return jwt.sign( user, 
         private_key, 
         { algorithm : 'RS512', expiresIn : '7d'})
+}
+
+const encrypt = (plaintext) => {
+    const ciphertext = crypto.AES.encrypt(JSON.stringify(plaintext), 'secret key 123').toString()
+
+    return ciphertext
 }
 
 // δημιουργια λογαριασμου χρηστη
@@ -110,8 +117,8 @@ router.post("/login", async (req,res) => {
         const {password, refresh_token, createdAt, updatedAt, additionAc, pendingAc, friends, ...other} = user._doc
 
         // αποθηκευουμε και τα δυο token μας σε cookies HttpOnly
-        const accessToken = createAccessToken(other)
-        const refreshToken = createRefreshToken(other)
+        const accessToken = encrypt(createAccessToken(other))
+        const refreshToken = encrypt(createRefreshToken(other))
 
         //αποθηκευση του refresh token στην βαση δεδομενων του χρηστη
         await user.updateOne( {$set : { refresh_token : refreshToken }} )

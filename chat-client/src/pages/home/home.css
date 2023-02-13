@@ -76,6 +76,12 @@
     color: white;
 }
 
+.callIconProp {
+    margin-left: 90%;
+    cursor: pointer;
+    color: white;
+}
+
 @media screen and (max-width: 768px) {
     .mainWrap {
         background-color:  #202225;

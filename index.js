@@ -81,7 +81,6 @@ app.use(helmet.xssFilter())
 
 app.use(morgan('common'))
 app.use(cookieParser())
-app.use(cors())
 
 app.use("*/images/", express.static(path.join(__dirname, "PUBLIC_FOLDER/images/")))
 app.use("*/background/", express.static(path.join(__dirname, "PUBLIC_FOLDER/background/")))
@@ -166,6 +165,12 @@ app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/conversations", convRoute)
 app.use("/api/v1/messages", messageRoute)
 
+/*app.use(express.static(path.join(__dirname, "/chat-client/build")))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/chat-client/build', 'index.html'))
+})*/
+
 // Η port η οποια θα τρεχει ο backend server μας
 const server = app.listen(process.env.PORT || 8800, () => {
     console.log("Backend Server is running")
@@ -197,12 +202,13 @@ io.on("connection", (socket) =>{
   // στειλε ολους τους συνδεμενους χρηστες στον client
   io.emit("users", users)
 
+  io.emit("me", socket.id)
+
   // παρε το αντικειμενο senderId, receiverId, text
   // απο τον client
   socket.on("sendMsg", ({data, conversationId, initMess, read, to}) => {
     // στειλε σε ολους τους συνδεμενους χρηστες
     // το αντικειμενο senderId και text
-    console.log(data, to)
     io.to(to).emit("getMsg", {
       initMess,
       conversationId,
@@ -216,5 +222,17 @@ io.on("connection", (socket) =>{
     users = users.filter(us => us.userId === User.userId)
 
     io.emit("users", users)
+  })
+
+  socket.on("callUser", ({userToCall, signalData, from, name}) => {
+    io.to(userToCall).emit("callUser", {signal : signalData, from, name})
+  })
+
+  socket.on("answerCall", (data) => {
+    io.to(data.to).emit("callAccept", data.signal)
+  })
+
+  socket.on("disconnectCall", () => {
+    socket.broadcast.emit("callEnded")
   })
 })
